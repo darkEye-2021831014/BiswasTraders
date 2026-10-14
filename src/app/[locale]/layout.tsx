@@ -23,23 +23,19 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={params.locale}>
-      <body className="bg-canvas text-charcoal min-h-screen flex flex-col">
-        <NextIntlClientProvider messages={messages} locale={params.locale}>
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-brick focus:text-white focus:px-3 focus:py-2 focus:rounded"
-          >
-            Skip to content
-          </a>
-          <SiteHeader locale={params.locale} />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter locale={params.locale} />
-          <MobileCallBar locale={params.locale} />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages} locale={params.locale}>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-brick focus:text-white focus:px-3 focus:py-2 focus:rounded"
+      >
+        Skip to content
+      </a>
+      <SiteHeader locale={params.locale} />
+      <main id="main" className="flex-1">
+        {children}
+      </main>
+      <SiteFooter locale={params.locale} />
+      <MobileCallBar locale={params.locale} />
+    </NextIntlClientProvider>
   );
 }
