@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { faq } from "@/content/faq";
 import type { Locale } from "@/i18n/config";
+import { FAQPageJsonLd } from "@/components/seo/JsonLd";
 
 /**
  * Native <details>/<summary> accordion. No client-side JS for
@@ -57,7 +58,7 @@ export async function FaqAccordion({
             <div className="pb-5 pl-10 pr-1 text-sm md:text-base text-charcoal/85 leading-relaxed">
               <p>{item.answer}</p>
               {item.unconfirmed ? (
-                <p className="mt-2 text-xs italic text-charcoal/60">
+                <p className="mt-2 text-xs italic text-charcoal/70">
                   {locale === "bn"
                     ? "সঠিক তথ্যের জন্য ফোনে জেনে নিন।"
                     : "Please confirm the exact details on a call."}
@@ -69,24 +70,8 @@ export async function FaqAccordion({
       </div>
 
       {includeJsonLd ? (
-        <script
-          type="application/ld+json"
-          // FAQPage structured data. Questions are translated above;
-          // we re-derive them here for the JSON-LD blob.
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: items.map((item) => ({
-                "@type": "Question",
-                name: item.question,
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: item.answer,
-                },
-              })),
-            }),
-          }}
+        <FAQPageJsonLd
+          items={items.map((it) => ({ question: it.question, answer: it.answer }))}
         />
       ) : null}
     </>

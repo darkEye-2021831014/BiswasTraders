@@ -39,7 +39,7 @@ export async function ThreeSteps({ locale }: { locale: Locale }) {
                   </span>
                   <span
                     aria-hidden
-                    className="font-display font-bold text-charcoal/30 text-sm"
+                    className="font-display font-bold text-charcoal/50 text-sm"
                   >
                     STEP {String(i + 1).padStart(2, "0")}
                   </span>
@@ -53,7 +53,7 @@ export async function ThreeSteps({ locale }: { locale: Locale }) {
                 {/* small dimension mark, top-right */}
                 <span
                   aria-hidden
-                  className="absolute top-2 right-2 text-[10px] uppercase tracking-eyebrow font-display text-charcoal/30"
+                  className="absolute top-2 right-2 text-[10px] uppercase tracking-eyebrow font-display text-charcoal/50"
                 >
                   0{i + 1} / 03
                 </span>

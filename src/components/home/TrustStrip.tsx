@@ -38,7 +38,7 @@ export async function TrustStrip({ locale }: { locale: Locale }) {
                 </span>
                 <span
                   aria-hidden
-                  className="font-display font-bold text-charcoal/30 text-sm"
+                  className="font-display font-bold text-charcoal/50 text-sm"
                 >
                   {String(i + 1).padStart(2, "0")} / {trustPromises.length}
                 </span>

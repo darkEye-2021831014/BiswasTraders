@@ -43,7 +43,7 @@ export function ProductRelated({
               <div className="font-display font-semibold text-sm leading-snug break-words">
                 {pick(p.name, locale)}
               </div>
-              <div className="text-[11px] uppercase tracking-eyebrow text-charcoal/60 font-display mt-2">
+              <div className="text-[11px] uppercase tracking-eyebrow text-charcoal/70 font-display mt-2">
                 {pick(p.soldBy, locale)}
               </div>
             </Link>

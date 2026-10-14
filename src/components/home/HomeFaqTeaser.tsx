@@ -68,7 +68,7 @@ export async function HomeFaqTeaser({ locale }: { locale: Locale }) {
                 <div className="pb-5 pl-10 pr-1 text-sm md:text-base text-charcoal/85 leading-relaxed">
                   <p>{answer}</p>
                   {entry.unconfirmed ? (
-                    <p className="mt-2 text-xs italic text-charcoal/60">
+                    <p className="mt-2 text-xs italic text-charcoal/70">
                       {locale === "bn"
                         ? "সঠিক তথ্যের জন্য ফোনে জেনে নিন।"
                         : "Please confirm the exact details on a call."}

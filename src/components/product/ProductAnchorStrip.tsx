@@ -32,7 +32,7 @@ export async function ProductAnchorStrip({
       >
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2">
           <span
-            className="hidden md:inline text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display pr-2 border-r border-line shrink-0"
+            className="hidden md:inline text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display pr-2 border-r border-line shrink-0"
             aria-hidden
           >
             {t("products.anchorStickyTitle")}

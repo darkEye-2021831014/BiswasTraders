@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -17,6 +18,16 @@ export const metadata: Metadata = {
   title: "Styleguide",
   robots: { index: false, follow: false },
 };
+
+/**
+ * /styleguide is an internal design reference. We don't want it
+ * discoverable on the public site (or in robots/sitemap), so in
+ * production builds we 404 immediately. In dev it's freely
+ * browseable at /[locale]/styleguide.
+ */
+function blockInProduction() {
+  if (process.env.NODE_ENV === "production") notFound();
+}
 
 const TOKENS = [
   { name: "Canvas", value: "#FAF8F5", cls: "bg-canvas text-charcoal border" },
@@ -38,6 +49,7 @@ const BANGLA_SAMPLE: L10n = {
 };
 
 export default async function StyleguidePage({ params }: { params: { locale: Locale } }) {
+  blockInProduction();
   setRequestLocale(params.locale);
   const t = await getTranslations({ locale: params.locale });
   return (
@@ -69,7 +81,7 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
         <h2 className="mt-12 text-2xl font-semibold">{t("styleguide.fontsTitle")}</h2>
         <Card className="mt-4 space-y-3">
           <div>
-            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/60">
+            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/70">
               Space Grotesk (display)
             </div>
             <div className="text-2xl md:text-4xl font-display font-semibold">
@@ -77,7 +89,7 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
             </div>
           </div>
           <div>
-            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/60">
+            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/70">
               Plus Jakarta Sans (body)
             </div>
             <p className="max-w-prose text-sm md:text-base">
@@ -86,7 +98,7 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
             </p>
           </div>
           <div>
-            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/60">
+            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/70">
               Anek Bangla (heading)
             </div>
             <div className="text-2xl md:text-3xl bn font-semibold">
@@ -94,11 +106,11 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
             </div>
           </div>
           <div>
-            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/60">
+            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/70">
               Hind Siliguri (body)
             </div>
             <p className="bn text-sm md:text-base max-w-prose">{BANGLA_SAMPLE.bn}</p>
-            <p className="text-xs text-charcoal/60 mt-2">
+            <p className="text-xs text-charcoal/70 mt-2">
               Bangla line-height is set to +10% (1.71) to keep vowel marks from clipping.
             </p>
           </div>
@@ -120,7 +132,7 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
               <Button size="lg">Large</Button>
               <ButtonLink href="#">As link</ButtonLink>
             </div>
-            <div className="mt-4 text-[11px] text-charcoal/60">All buttons have 48px height min.</div>
+            <div className="mt-4 text-[11px] text-charcoal/70">All buttons have 48px height min.</div>
           </Card>
 
           <Card>
@@ -182,13 +194,13 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
                     variant={v}
                     aspect="1/1"
                   />
-                  <div className="mt-2 text-[11px] uppercase tracking-eyebrow text-charcoal/60">
+                  <div className="mt-2 text-[11px] uppercase tracking-eyebrow text-charcoal/70">
                     {v}
                   </div>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-charcoal/60 mt-3">
+            <p className="text-xs text-charcoal/70 mt-3">
               The placeholder is themed to the product. Drop a real JPG at
               <code className="font-mono"> /public/images/products/&lt;slug&gt;.jpg</code> and the
               component will switch to it.
@@ -210,7 +222,7 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
         <h2 className="mt-12 text-2xl font-semibold">{t("styleguide.statesTitle")}</h2>
         <Card className="mt-4 space-y-3">
           <div>
-            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/60">
+            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/70">
               Focus ring
             </div>
             <div className="mt-2 flex flex-wrap gap-3">
@@ -220,7 +232,7 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
             </div>
           </div>
           <div>
-            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/60">
+            <div className="text-[10px] uppercase tracking-eyebrow font-display text-charcoal/70">
               Disabled
             </div>
             <div className="mt-2 flex flex-wrap gap-3">

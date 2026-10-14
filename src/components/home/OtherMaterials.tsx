@@ -99,7 +99,7 @@ function OtherMaterialCard({
       </p>
       <dl className="mt-4 grid grid-cols-2 gap-3 text-sm border-t border-line pt-3">
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.fact1Label}
           </dt>
           <dd className="font-display text-charcoal mt-1 text-[13px] leading-snug">
@@ -107,7 +107,7 @@ function OtherMaterialCard({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.fact2Label}
           </dt>
           <dd className="font-display text-charcoal mt-1 text-[13px] leading-snug">

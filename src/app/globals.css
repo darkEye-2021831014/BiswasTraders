@@ -81,7 +81,11 @@ table,
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-space-grotesk), var(--font-anek-bangla), system-ui, sans-serif;
   letter-spacing: -0.01em;
-  color: var(--color-charcoal);
+  /* Inherit colour from the parent so a `text-canvas` parent (e.g. a
+     dark navy section) isn't overridden back to charcoal. Sections
+     that need charcoal headings should add the `text-charcoal`
+     utility on the heading itself. */
+  color: inherit;
 }
 
 html[lang="bn"] h1,

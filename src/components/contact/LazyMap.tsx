@@ -47,7 +47,7 @@ export function LazyMap({
       >
         {loadLabel}
       </button>
-      <p className="text-[11px] text-charcoal/60 italic">{note}</p>
+      <p className="text-[11px] text-charcoal/70 italic">{note}</p>
     </div>
   );
 }

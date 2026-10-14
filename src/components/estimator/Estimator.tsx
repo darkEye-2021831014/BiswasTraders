@@ -237,7 +237,7 @@ function NumberInput({
       {!error && hint ? (
         <span
           id={`${id}-hint`}
-          className="block text-xs text-charcoal/60 mt-1"
+          className="block text-xs text-charcoal/70 mt-1"
         >
           {hint}
         </span>
@@ -417,7 +417,7 @@ function BricksTab({
         type="button"
         onClick={handleCalc}
         disabled={!canCompute}
-        className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/60 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
+        className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/70 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
         style={{ borderRadius: 2 }}
       >
         {labels.estimateNote ? labels.tabBricks : labels.tabBricks}
@@ -477,7 +477,7 @@ function BricksResult({
       </div>
       <dl className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultBricksArea}
           </dt>
           <dd className="tabular text-base">
@@ -485,7 +485,7 @@ function BricksResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultBricksPerSqft}
           </dt>
           <dd className="tabular text-base">
@@ -493,7 +493,7 @@ function BricksResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultBricksWastage}
           </dt>
           <dd className="tabular text-base">{wastageStr}%</dd>
@@ -700,7 +700,7 @@ function ConcreteTab({
         type="button"
         onClick={() => setShowResult(true)}
         disabled={!canCompute}
-        className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/60 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
+        className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/70 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
         style={{ borderRadius: 2 }}
       >
         {labels.tabConcrete}
@@ -764,7 +764,7 @@ function ConcreteResult({
       </div>
       <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultConcreteVolume}
           </dt>
           <dd className="tabular text-lg font-display">
@@ -772,7 +772,7 @@ function ConcreteResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultConcreteDry}
           </dt>
           <dd className="tabular text-lg font-display">
@@ -780,7 +780,7 @@ function ConcreteResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultConcreteCement}
           </dt>
           <dd className="tabular text-lg font-display">
@@ -788,7 +788,7 @@ function ConcreteResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultConcreteSand}
           </dt>
           <dd className="tabular text-lg font-display">
@@ -796,7 +796,7 @@ function ConcreteResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultConcreteAggregate}
           </dt>
           <dd className="tabular text-lg font-display">
@@ -804,7 +804,7 @@ function ConcreteResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.resultConcreteRatio}
           </dt>
           <dd className="tabular text-lg font-display">{ratioStr}</dd>
@@ -919,7 +919,7 @@ function CftTab({
         type="button"
         onClick={() => setShowResult(true)}
         disabled={!canCompute}
-        className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/60 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
+        className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/70 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
         style={{ borderRadius: 2 }}
       >
         {labels.tabCft}
@@ -965,7 +965,7 @@ function CftResult({
       </div>
       <dl className="mt-4 grid grid-cols-3 gap-3 text-sm">
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.cftLength}
           </dt>
           <dd className="tabular text-base">
@@ -973,7 +973,7 @@ function CftResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.cftWidth}
           </dt>
           <dd className="tabular text-base">
@@ -981,7 +981,7 @@ function CftResult({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {labels.cftHeight}
           </dt>
           <dd className="tabular text-base">
@@ -1029,7 +1029,7 @@ function ResultActions({
         {labels.callNow}
       </a>
       {quantityText ? (
-        <p className="sm:hidden text-xs text-charcoal/60 mt-1">
+        <p className="sm:hidden text-xs text-charcoal/70 mt-1">
           {labels.askForPriceQuantity}: {quantityText}
         </p>
       ) : null}

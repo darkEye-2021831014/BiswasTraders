@@ -74,7 +74,7 @@ export async function ProductDetail({
             aspect="4/3"
             priority
           />
-          <p className="mt-3 text-xs text-charcoal/60 italic">
+          <p className="mt-3 text-xs text-charcoal/70 italic">
             {`Placeholder — drop a real photo at /public/images/products/${product.slug}.jpg`}
           </p>
         </div>
@@ -104,7 +104,7 @@ export async function ProductDetail({
           <Card tone="sand">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
-                <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+                <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
                   {t("products.soldBy")}
                 </div>
                 <div className="font-display text-base text-charcoal mt-1">
@@ -217,7 +217,7 @@ export async function ProductDetail({
                 {t("product.whereUsedTitle")}
               </span>
             </div>
-            <p className="text-sm text-charcoal/60 italic">
+            <p className="text-sm text-charcoal/70 italic">
               {t("product.whereUsedEmpty")}
             </p>
           </div>
@@ -295,7 +295,7 @@ export async function ProductDetail({
       <section>
         <Card tone="sand" className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+            <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
               {t("product.needEstimateTitle")}
             </div>
             <p className="text-sm text-charcoal/80 mt-1 max-w-prose">

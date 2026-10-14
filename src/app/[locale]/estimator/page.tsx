@@ -4,6 +4,25 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Estimator } from "@/components/estimator/Estimator";
 import type { Locale } from "@/i18n/config";
+import { buildMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
+
+export function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Metadata {
+  return buildMetadata({
+    locale: params.locale,
+    titleBn: "হিসাবকারী — ইট, কংক্রিট, সিএফটি",
+    titleEn: "Estimator — bricks, concrete, cft",
+    descriptionBn:
+      "আপনার কাজের জন্য কতটুকু ইট, সিমেন্ট, বালু বা খোয়া লাগবে — হিসাব করে দেখুন।",
+    descriptionEn:
+      "Estimate how many bricks, cement, sand or khoa your job needs.",
+    path: "/estimator",
+  });
+}
 
 export default async function EstimatorPage({
   params,

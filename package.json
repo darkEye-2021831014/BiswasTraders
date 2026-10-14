@@ -9,7 +9,9 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "content:check": "node scripts/content-check.mjs",
+    "og:regen": "bash scripts/generate-og.sh"
   },
   "dependencies": {
     "next": "14.2.18",

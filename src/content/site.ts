@@ -6,6 +6,34 @@ import type { L10n } from "@/i18n/l10n";
  * and is set to null with a // TODO(owner) comment.
  */
 
+/**
+ * Canonical site URL used for SEO (canonical, hreflang, sitemap, JSON-LD).
+ *
+ * Defaults to a placeholder domain. The owner can override this in two
+ * ways, in order of preference:
+ *   1. Set NEXT_PUBLIC_SITE_URL in the deploy environment (e.g. Vercel).
+ *   2. Edit the fallback below.
+ *
+ * We do NOT require a .env file to build — the fallback is the source of
+ * truth in dev and in any environment where the env var is not set.
+ *
+ * TODO(owner): replace the fallback with the real production domain.
+ */
+export const SITE_URL: string =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://biswastraders.trade";
+
+/** Path prefix for each locale. "" for default (bn), "/en" for English. */
+export function localePath(locale: "bn" | "en", path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return locale === "bn" ? p : `/en${p === "/" ? "" : p}`;
+}
+
+/** Absolute URL for a given locale + path. */
+export function absoluteUrl(locale: "bn" | "en", path: string): string {
+  return `${SITE_URL}${localePath(locale, path)}`;
+}
+
 export type ZoneGroup = "core" | "extended";
 
 export type ServiceZone = {

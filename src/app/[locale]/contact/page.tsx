@@ -13,10 +13,12 @@ import { IconFacebook, IconMap } from "@/components/ui/icons";
 import { site } from "@/content/site";
 import { isLocale } from "@/i18n/config";
 import { pick } from "@/i18n/l10n";
+import { buildMetadata } from "@/lib/seo";
+import { LocalBusinessJsonLd } from "@/components/seo/JsonLd";
 
 /**
- * Per-locale metadata. We only set the basics — title, description,
- * canonical, and a single language alternate.
+ * Per-locale metadata for the contact page. Same SEO keys as the
+ * home page so the brand shows up consistently in search results.
  */
 export async function generateMetadata({
   params,
@@ -24,20 +26,16 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   if (!isLocale(params.locale)) return {};
-  const t = await getTranslations({ locale: params.locale });
-  const baseUrl = "https://biswastraders.trade";
-  const path = params.locale === "bn" ? "/contact" : "/en/contact";
-  return {
-    title: t("contact.pageTitle"),
-    description: t("contact.pageSubtitle"),
-    alternates: {
-      canonical: `${baseUrl}${path}`,
-      languages: {
-        bn: `${baseUrl}/contact`,
-        en: `${baseUrl}/en/contact`,
-      },
-    },
-  };
+  return buildMetadata({
+    locale: params.locale,
+    titleBn: "যোগাযোগ — মেসার্স বিশ্বাস ট্রেডার্স",
+    titleEn: "Contact — M/S Biswas Traders",
+    descriptionBn:
+      "ফোন, WhatsApp, Facebook এবং ইয়ার্ডের ঠিকানা। সিঙ্গাইর, মানিকগঞ্জ।",
+    descriptionEn:
+      "Phone, WhatsApp, Facebook and the yard address. Singair, Manikganj.",
+    path: "/contact",
+  });
 }
 
 export default async function ContactPage({
@@ -51,6 +49,10 @@ export default async function ContactPage({
   const t = await getTranslations({ locale });
   return (
     <>
+      {/* LocalBusiness JSON-LD on the contact page too — Google
+          sometimes prefers to surface the contact URL for local
+          businesses. */}
+      <LocalBusinessJsonLd locale={locale} />
       <section className="py-10 md:py-14">
         <Container>
           <PageHeading
@@ -134,7 +136,7 @@ export default async function ContactPage({
           <div className="mt-6 grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-4">
             <Card className="flex flex-col gap-4">
               <div>
-                <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+                <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
                   {t("contact.yardAddress")}
                 </div>
                 <p className="mt-1 text-base flex items-start gap-2">
@@ -156,7 +158,7 @@ export default async function ContactPage({
             </Card>
 
             <Card className="flex flex-col gap-3">
-              <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+              <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
                 {t("contact.yardHowToFind")}
               </div>
               {site.landmarks.length > 0 ? (
@@ -169,7 +171,7 @@ export default async function ContactPage({
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-charcoal/60 italic">
+                <p className="text-sm text-charcoal/70 italic">
                   {t("contact.yardHowToFind")}
                 </p>
               )}

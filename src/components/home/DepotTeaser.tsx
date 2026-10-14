@@ -36,7 +36,7 @@ export async function DepotTeaser({ locale }: { locale: Locale }) {
         <div className="mt-6 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-4">
           <Card className="flex flex-col gap-4">
             <div>
-              <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display mb-1">
+              <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display mb-1">
                 {t("home.depotVisitUs")}
               </div>
               <p className="text-base flex items-start gap-2">
@@ -58,7 +58,7 @@ export async function DepotTeaser({ locale }: { locale: Locale }) {
             <div className="border-t border-line pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
               {site.hours ? (
                 <div>
-                  <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display mb-1">
+                  <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display mb-1">
                     {t("home.depotOpeningHours")}
                   </div>
                   <div className="font-display text-sm">
@@ -68,7 +68,7 @@ export async function DepotTeaser({ locale }: { locale: Locale }) {
               ) : null}
               {site.facebookUrl ? (
                 <div>
-                  <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display mb-1">
+                  <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display mb-1">
                     {t("home.depotFollowUs")}
                   </div>
                   <a

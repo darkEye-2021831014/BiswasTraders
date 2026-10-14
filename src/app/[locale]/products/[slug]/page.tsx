@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { ProductDetail } from "@/components/product/ProductDetail";
 import { getProductBySlug, products } from "@/content/products";
 import { isLocale } from "@/i18n/config";
+import { buildMetadata } from "@/lib/seo";
 
 /**
  * Pre-render the 5 slugs for both locales at build time. Anything not
@@ -18,9 +19,9 @@ export function generateStaticParams() {
 }
 
 /**
- * Per-product, per-locale metadata. We add canonical + alternate
- * language links so each localized detail page can stand on its own
- * in search results without confusing the bn/en signals.
+ * Per-product, per-locale metadata. Title + description come from
+ * the `productMeta` namespace (already BN/EN aware) so we just hand
+ * them to `buildMetadata` for canonical / hreflang / OG / Twitter.
  */
 export async function generateMetadata({
   params,
@@ -30,30 +31,16 @@ export async function generateMetadata({
   if (!isLocale(params.locale)) return {};
   const product = getProductBySlug(params.slug);
   if (!product) return {};
-  const baseUrl = "https://biswastraders.trade";
-  const path =
-    params.locale === "bn"
-      ? `/products/${product.slug}`
-      : `/en/products/${product.slug}`;
-  const altPath =
-    params.locale === "bn"
-      ? `/en/products/${product.slug}`
-      : `/products/${product.slug}`;
   const t = await getTranslations({ locale: params.locale, namespace: "productMeta" });
-  const title = t(`${product.slug}Title`);
-  const description = t(`${product.slug}Desc`);
-  return {
-    title,
-    description,
-    alternates: {
-      canonical: `${baseUrl}${path}`,
-      languages: {
-        bn: `${baseUrl}/products/${product.slug}`,
-        en: `${baseUrl}/en/products/${product.slug}`,
-        "x-default": `${baseUrl}${altPath}`,
-      },
-    },
-  };
+  return buildMetadata({
+    locale: params.locale,
+    titleBn: t(`${product.slug}Title`),
+    titleEn: t(`${product.slug}Title`),
+    descriptionBn: t(`${product.slug}Desc`),
+    descriptionEn: t(`${product.slug}Desc`),
+    path: `/products/${product.slug}`,
+    ogType: "article",
+  });
 }
 
 export default async function ProductDetailPage({

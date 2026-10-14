@@ -11,10 +11,35 @@ import { FinalCtaBand } from "@/components/home/FinalCtaBand";
 import { BrickDivider } from "@/components/ui/BrickDivider";
 import { HomeFaqTeaser } from "@/components/home/HomeFaqTeaser";
 import { YardPhotoGallery } from "@/components/gallery/YardPhotoGallery";
+import { LocalBusinessJsonLd } from "@/components/seo/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/config";
+import { buildMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
+
+/**
+ * Home-page metadata. Title + description live in the message files
+ * (home.heroTitle / home.heroSubtitle) so BN/EN stay in sync, but we
+ * hoist them into dedicated SEO keys here for stable title strings.
+ */
+export function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Metadata {
+  return buildMetadata({
+    locale: params.locale,
+    titleBn: "মেসার্স বিশ্বাস ট্রেডার্স — সিঙ্গাইর, মানিকগঞ্জ",
+    titleEn: "M/S Biswas Traders — Singair, Manikganj",
+    descriptionBn:
+      "ইট, বালু, খোয়া, সিমেন্ট ও রড — সিঙ্গাইর, মানিকগঞ্জ থেকে আমাদের নিজস্ব ট্রাকে সরবরাহ। আজকের রেট জানতে কল বা WhatsApp করুন।",
+    descriptionEn:
+      "Bricks, sand, khoa, cement and rebar — delivered in our own trucks from Singair, Manikganj. Call or WhatsApp for today's rate.",
+    path: "/",
+  });
+}
 
 /**
  * Home page composition. The order is fixed by the brief and matches the
@@ -31,6 +56,8 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
   const t = await getTranslations({ locale });
   return (
     <>
+      {/* LocalBusiness JSON-LD — only confirmed facts from site.ts. */}
+      <LocalBusinessJsonLd locale={locale} />
       <Hero locale={locale} />
       <TrustStrip locale={locale} />
       <BrickDivider tone="sand" />

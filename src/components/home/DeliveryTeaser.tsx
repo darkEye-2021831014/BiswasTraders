@@ -85,7 +85,7 @@ export async function DeliveryTeaser({ locale }: { locale: Locale }) {
               />
             ) : null}
 
-            <p className="mt-3 text-[11px] text-charcoal/60 italic">
+            <p className="mt-3 text-[11px] text-charcoal/70 italic">
               {t("home.deliveryNotListed")}
             </p>
           </Card>
@@ -189,7 +189,7 @@ function ZoneGroup({
 }) {
   return (
     <div>
-      <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display mb-1.5">
+      <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display mb-1.5">
         {title}
       </div>
       <ul className="flex flex-wrap gap-2">
@@ -205,7 +205,7 @@ function ZoneGroup({
             />
             <span className="font-display">{pick(z.name, locale)}</span>
             {z.distanceKm !== null ? (
-              <span className="text-[11px] text-charcoal/60 tabular">
+              <span className="text-[11px] text-charcoal/70 tabular">
                 ~ {z.distanceKm} km
               </span>
             ) : null}

@@ -114,7 +114,7 @@ export async function BrickSpotlight({ locale }: { locale: Locale }) {
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-charcoal/60 italic">
+                <p className="text-sm text-charcoal/70 italic">
                   {t("products.noVariants")}
                 </p>
               )}

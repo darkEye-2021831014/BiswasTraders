@@ -13,6 +13,7 @@ import { isLocale } from "@/i18n/config";
 import { pick } from "@/i18n/l10n";
 import type { Locale } from "@/i18n/config";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
+import { buildMetadata } from "@/lib/seo";
 
 const FACTORS = ["1", "2", "3"] as const;
 
@@ -32,20 +33,16 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   if (!isLocale(params.locale)) return {};
-  const t = await getTranslations({ locale: params.locale });
-  const baseUrl = "https://biswastraders.trade";
-  const path = params.locale === "bn" ? "/delivery" : "/en/delivery";
-  return {
-    title: t("delivery.pageTitle"),
-    description: t("delivery.intro"),
-    alternates: {
-      canonical: `${baseUrl}${path}`,
-      languages: {
-        bn: `${baseUrl}/delivery`,
-        en: `${baseUrl}/en/delivery`,
-      },
-    },
-  };
+  return buildMetadata({
+    locale: params.locale,
+    titleBn: "ডেলিভারি ও মূল্য নির্ধারণ",
+    titleEn: "Delivery & how the price is decided",
+    descriptionBn:
+      "ডেলিভারি এলাকা, গাড়ির ধরন এবং মূল্য কীভাবে ঠিক হয় — সবকিছু খোলামেলা বলা।",
+    descriptionEn:
+      "Delivery zones, vehicle types, and how the rate is decided — all in plain language.",
+    path: "/delivery",
+  });
 }
 
 export default async function DeliveryPage({
@@ -161,7 +158,7 @@ export default async function DeliveryPage({
             </Card>
             <Card className="flex flex-col justify-between gap-4">
               <div>
-                <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+                <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
                   {t("home.finalEyebrow")}
                 </div>
                 <p className="text-sm text-charcoal/80 mt-1 max-w-prose">
@@ -222,7 +219,7 @@ export default async function DeliveryPage({
               />
             </div>
           ) : (
-            <p className="mt-6 text-sm text-charcoal/60 italic">
+            <p className="mt-6 text-sm text-charcoal/70 italic">
               {t("delivery.zonesNotListed")}
             </p>
           )}
@@ -255,7 +252,7 @@ export default async function DeliveryPage({
                   </div>
                   {v.goodFor ? (
                     <div className="mb-3">
-                      <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+                      <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
                         {t("delivery.vehiclesGoodFor")}
                       </div>
                       <p className="text-sm text-charcoal mt-1 leading-snug">
@@ -265,7 +262,7 @@ export default async function DeliveryPage({
                   ) : null}
                   {v.notes ? (
                     <div className="mb-3">
-                      <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+                      <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
                         {t("delivery.vehiclesNotes")}
                       </div>
                       <p className="text-sm text-charcoal mt-1 leading-snug">
@@ -274,7 +271,7 @@ export default async function DeliveryPage({
                     </div>
                   ) : null}
                   {v.capacity ? (
-                    <div className="text-[11px] text-charcoal/60 mt-auto pt-3 border-t border-line">
+                    <div className="text-[11px] text-charcoal/70 mt-auto pt-3 border-t border-line">
                       {pick(v.capacity, locale)}
                     </div>
                   ) : (
@@ -445,7 +442,7 @@ function ZoneGroup({
                 {pick(z.name, locale)}
               </div>
               {z.distanceKm !== null ? (
-                <div className="text-[11px] text-charcoal/60 mt-1 tabular">
+                <div className="text-[11px] text-charcoal/70 mt-1 tabular">
                   ~ {z.distanceKm} km
                 </div>
               ) : (

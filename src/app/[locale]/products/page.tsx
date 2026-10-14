@@ -9,6 +9,7 @@ import { BrickDivider } from "@/components/ui/BrickDivider";
 import { getHeroProduct, products } from "@/content/products";
 import { isLocale } from "@/i18n/config";
 import type { Locale } from "@/i18n/config";
+import { buildMetadata } from "@/lib/seo";
 
 /**
  * /products index. Same H1-PageHeading pattern as the rest of the site.
@@ -30,20 +31,16 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   if (!isLocale(params.locale)) return {};
-  const t = await getTranslations({ locale: params.locale });
-  const baseUrl = "https://biswastraders.trade";
-  const path = params.locale === "bn" ? "/products" : "/en/products";
-  return {
-    title: t("products.pageTitle"),
-    description: t("products.pageSubtitle"),
-    alternates: {
-      canonical: `${baseUrl}${path}`,
-      languages: {
-        bn: `${baseUrl}/products`,
-        en: `${baseUrl}/en/products`,
-      },
-    },
-  };
+  return buildMetadata({
+    locale: params.locale,
+    titleBn: "পণ্য — ইট, বালু, খোয়া, সিমেন্ট, রড",
+    titleEn: "Products — Bricks, sand, khoa, cement, rebar",
+    descriptionBn:
+      "মেসার্স বিশ্বাস ট্রেডার্সের পাঁচটি পণ্য এক নজরে। দামের জন্য ফোন বা WhatsApp করুন।",
+    descriptionEn:
+      "Five products from M/S Biswas Traders. Call or WhatsApp for today's rate.",
+    path: "/products",
+  });
 }
 
 export default async function ProductsPage({ params }: { params: { locale: Locale } }) {

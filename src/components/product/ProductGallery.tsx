@@ -33,7 +33,7 @@ export async function ProductGallery({ product, locale }: { product: Product; lo
           aspect="4/3"
           priority
         />
-        <p className="mt-3 text-xs text-charcoal/60 italic">
+        <p className="mt-3 text-xs text-charcoal/70 italic">
           Placeholder — drop a real photo at <code className="font-mono">/public/images/products/{product.slug}.jpg</code>.
         </p>
       </div>
@@ -55,7 +55,7 @@ export async function ProductGallery({ product, locale }: { product: Product; lo
 
         <Card tone="sand" className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+            <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
               {t("products.soldBy")}
             </div>
             <div className="font-display text-base text-charcoal mt-1">
@@ -103,7 +103,7 @@ export async function ProductGallery({ product, locale }: { product: Product; lo
             </ul>
           </section>
         ) : (
-          <p className="text-sm text-charcoal/60 italic">{t("products.noVariants")}</p>
+          <p className="text-sm text-charcoal/70 italic">{t("products.noVariants")}</p>
         )}
 
         {product.uses.length > 0 ? (

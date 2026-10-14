@@ -54,7 +54,7 @@ export async function ProductMiniCard({
       </p>
       <dl className="mt-4 grid grid-cols-2 gap-3 text-sm border-t border-line pt-3">
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {t("products.cardSoldBy")}
           </dt>
           <dd className="font-display text-charcoal mt-1 text-[13px] leading-snug">
@@ -62,7 +62,7 @@ export async function ProductMiniCard({
           </dd>
         </div>
         <div>
-          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display">
+          <dt className="text-[10px] uppercase tracking-eyebrow text-charcoal/70 font-display">
             {t("products.cardSpecsHeading")}
           </dt>
           <dd className="font-display text-charcoal mt-1 text-[13px] leading-snug">
