@@ -12,6 +12,7 @@ import { site } from "@/content/site";
 import { isLocale } from "@/i18n/config";
 import { pick } from "@/i18n/l10n";
 import type { Locale } from "@/i18n/config";
+import { FaqAccordion } from "@/components/faq/FaqAccordion";
 
 const FACTORS = ["1", "2", "3"] as const;
 
@@ -317,6 +318,22 @@ export default async function DeliveryPage({
       </section>
 
       <BrickDivider tone="charcoal" />
+
+      {/* FAQ */}
+      <section className="py-10 md:py-14 bg-canvas">
+        <Container>
+          <SectionHeading
+            eyebrow={t("faq.eyebrow")}
+            title={t("faq.title")}
+            subtitle={t("faq.subtitle")}
+          />
+          <div className="mt-6">
+            <FaqAccordion locale={locale} />
+          </div>
+        </Container>
+      </section>
+
+      <BrickDivider tone="navy" />
 
       {/* Unloading & checking tips */}
       <section className="py-10 md:py-14 bg-canvas">

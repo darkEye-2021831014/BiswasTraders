@@ -4,15 +4,14 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Estimator } from "@/components/estimator/Estimator";
 import type { Locale } from "@/i18n/config";
-import { products } from "@/content/products";
-import { pick } from "@/i18n/l10n";
 
-export default async function EstimatorPage({ params }: { params: { locale: Locale } }) {
+export default async function EstimatorPage({
+  params,
+}: {
+  params: { locale: Locale };
+}) {
   setRequestLocale(params.locale);
   const t = await getTranslations({ locale: params.locale });
-  const items = [...products]
-    .sort((a, b) => a.order - b.order)
-    .map((p) => ({ id: p.slug, name: pick(p.name, params.locale) }));
   return (
     <section className="py-10 md:py-14">
       <Container>
@@ -25,17 +24,66 @@ export default async function EstimatorPage({ params }: { params: { locale: Loca
         <Card elevated className="mt-8">
           <Estimator
             locale={params.locale}
-            products={items}
             labels={{
-              product: t("estimator.product"),
-              area: t("estimator.area"),
-              areaHint: t("estimator.areaHint"),
-              unit: t("estimator.unit"),
-              qty: t("estimator.qty"),
-              calc: t("estimator.calc"),
-              result: t("estimator.result"),
-              resultHint: t("estimator.resultHint"),
-              footer: t("estimator.footer"),
+              tabBricks: t("estimator.tabBricks"),
+              tabConcrete: t("estimator.tabConcrete"),
+              tabCft: t("estimator.tabCft"),
+              lengthFt: t("estimator.lengthFt"),
+              heightFt: t("estimator.heightFt"),
+              thickness: t("estimator.thickness"),
+              thickness5: t("estimator.thickness5"),
+              thickness10: t("estimator.thickness10"),
+              openingsSqft: t("estimator.openingsSqft"),
+              openingsOptional: t("estimator.openingsOptional"),
+              wastagePct: t("estimator.wastagePct"),
+              wastageDefault: t("estimator.wastageDefault"),
+              resultBricksTitle: t("estimator.resultBricksTitle"),
+              resultBricksPieces: t("estimator.resultBricksPieces"),
+              resultBricksThousands: t("estimator.resultBricksThousands"),
+              resultBricksPerSqft: t("estimator.resultBricksPerSqft"),
+              resultBricksArea: t("estimator.resultBricksArea"),
+              resultBricksWastage: t("estimator.resultBricksWastage"),
+              concreteLength: t("estimator.concreteLength"),
+              concreteWidth: t("estimator.concreteWidth"),
+              concreteThickness: t("estimator.concreteThickness"),
+              concreteMix: t("estimator.concreteMix"),
+              concreteMixCustom: t("estimator.concreteMixCustom"),
+              concreteMixCement: t("estimator.concreteMixCement"),
+              concreteMixSand: t("estimator.concreteMixSand"),
+              concreteMixAggregate: t("estimator.concreteMixAggregate"),
+              resultConcreteTitle: t("estimator.resultConcreteTitle"),
+              resultConcreteVolume: t("estimator.resultConcreteVolume"),
+              resultConcreteDry: t("estimator.resultConcreteDry"),
+              resultConcreteCement: t("estimator.resultConcreteCement"),
+              resultConcreteSand: t("estimator.resultConcreteSand"),
+              resultConcreteAggregate: t("estimator.resultConcreteAggregate"),
+              resultConcreteRatio: t("estimator.resultConcreteRatio"),
+              cftLength: t("estimator.cftLength"),
+              cftWidth: t("estimator.cftWidth"),
+              cftHeight: t("estimator.cftHeight"),
+              cftInches: t("estimator.cftInches"),
+              cftFeet: t("estimator.cftFeet"),
+              resultCftTitle: t("estimator.resultCftTitle"),
+              resultCftTotal: t("estimator.resultCftTotal"),
+              validateRequired: t("estimator.validateRequired"),
+              validateTooBig: t("estimator.validateTooBig"),
+              validateNan: t("estimator.validateNan"),
+              estimateNote: t("estimator.estimateNote"),
+              askForPrice: t("estimator.askForPrice"),
+              askForPriceQuantity: t("estimator.askForPriceQuantity"),
+              callNow: t("actions.callNow"),
+              whatsapp: t("actions.whatsapp"),
+              mix1_2_4: "1 : 2 : 4",
+              mix1_1_5_3: "1 : 1.5 : 3",
+              mix1_3_6: "1 : 3 : 6",
+              numberCft: t("estimator.numberCft"),
+              numberBags: t("estimator.numberBags"),
+              numberPieces: t("estimator.numberPieces"),
+              numberSqft: t("estimator.numberSqft"),
+              unitCft: t("estimator.unitCft"),
+              unitBag: t("estimator.unitBag"),
+              unitPcs: t("estimator.unitPcs"),
+              unitSqft: t("estimator.unitSqft"),
             }}
           />
         </Card>
