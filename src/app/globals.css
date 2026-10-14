@@ -283,3 +283,7 @@ html[lang="bn"] h6 {
 /* ---------- Prose tweaks ---------- */
 .prose-tight p { margin-bottom: 0.75rem; }
 .prose-tight p:last-child { margin-bottom: 0; }
+
+/* ---------- Utility: hide scrollbar but keep scrollable (anchor strip) ---------- */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
