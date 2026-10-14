@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import type { Locale } from "@/i18n/config";
+import { isLocale, type Locale } from "@/i18n/config";
 
 /** tel: link, BD national converted to international. */
 export function telHref(): string {
@@ -13,7 +13,13 @@ export type WaParams = {
   location?: string | undefined;
 };
 
-const TEMPLATE: Record<Locale, (p: Required<WaParams>) => string> = {
+type TemplateInput = {
+  product: string;
+  quantity: string;
+  location: string;
+};
+
+const TEMPLATE: Record<Locale, (p: TemplateInput) => string> = {
   bn: ({ product, quantity, location }) =>
     [
       "আসসালামু আলাইকুম,",
@@ -34,12 +40,18 @@ const TEMPLATE: Record<Locale, (p: Required<WaParams>) => string> = {
     ].join("\n"),
 };
 
-/** Build a wa.me URL with a prefilled, locale-appropriate message. */
+/**
+ * Build a wa.me URL with a prefilled, locale-appropriate message.
+ *
+ * Defensive: if a non-locale string somehow arrives at runtime, fall back
+ * to Bangla (the default locale) so we never throw during RSC serialization.
+ */
 export function waHref(params: WaParams): string {
+  const locale: Locale = isLocale(params.locale) ? params.locale : "bn";
   const product = params.product ?? "";
   const quantity = params.quantity ?? "";
   const location = params.location ?? "";
-  const text = TEMPLATE[params.locale]({ locale: params.locale, product, quantity, location });
+  const text = TEMPLATE[locale]({ product, quantity, location });
   const qs = new URLSearchParams({ text }).toString();
   return `https://wa.me/${site.whatsapp}?${qs}`;
 }
