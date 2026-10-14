@@ -1,0 +1,142 @@
+{
+  "site": {
+    "brand": "M/S Biswas Traders",
+    "brandEn": "M/S Biswas Traders",
+    "tagline": "Trusted bricks, one address",
+    "taglineEn": "Trusted bricks, one trusted address"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "delivery": "Delivery & Pricing",
+    "contact": "Contact",
+    "estimator": "Estimator"
+  },
+  "actions": {
+    "callNow": "Call now",
+    "whatsapp": "Ask on WhatsApp",
+    "viewProduct": "View product",
+    "viewAllProducts": "View all products",
+    "getQuote": "Call for price",
+    "askWhatsapp": "Get price on WhatsApp"
+  },
+  "home": {
+    "heroEyebrow": "Delivering from Singair, Manikganj",
+    "heroTitle": "Trusted bricks, on-time delivery",
+    "heroSubtitle": "For a home, a flat, or a large project — we deliver bricks, sand, khoa, cement and rebar on time.",
+    "trustLine1": "Sourced direct from the kiln",
+    "trustLine2": "Delivered in our own trucks",
+    "trustLine3": "Quality or quantity off — we make it right",
+    "productsEyebrow": "What we supply",
+    "productsTitle": "Five products, one address",
+    "productsSubtitle": "Price depends on delivery location and quantity. Call or WhatsApp us for today's rate.",
+    "processEyebrow": "How it works",
+    "processTitle": "Four simple steps",
+    "process1Title": "Pick a product",
+    "process1Body": "Browse the site and shortlist what you need.",
+    "process2Title": "Call or WhatsApp",
+    "process2Body": "Tell us your address and the quantity you need.",
+    "process3Title": "Confirm price",
+    "process3Body": "We share the rate based on today's market.",
+    "process4Title": "Truck on time",
+    "process4Body": "Our own trucks reach you, when we say.",
+    "zonesEyebrow": "Where we deliver",
+    "zonesTitle": "Delivery zones",
+    "zonesSubtitle": "Our home base is Singair, Manikganj. We also go to nearby areas — a quick call will confirm.",
+    "contactEyebrow": "Get in touch",
+    "contactTitle": "One call gives you today's price",
+    "contactBody": "Tell us the address and quantity, and we'll share the rate. A photo or rough number speeds things up."
+  },
+  "products": {
+    "pageEyebrow": "Products",
+    "pageTitle": "What we supply",
+    "pageSubtitle": "Each product has a Call and a WhatsApp button. Price depends on delivery and quantity — call us for the rate.",
+    "variants": "Variants",
+    "specs": "Specifications",
+    "uses": "Common uses",
+    "soldBy": "Sold by",
+    "askOnCall": "What to tell us when you call",
+    "noVariants": "No variants are listed for this product yet.",
+    "brands": "Brands"
+  },
+  "product": {
+    "notFound": "This product could not be found.",
+    "backToList": "Back to all products",
+    "needHelp": "Need today's price?",
+    "needHelpBody": "Call us or message on WhatsApp — tell us the address and quantity and we'll share the rate.",
+    "stampedReady": "Ready to dispatch",
+    "stampedHero": "Our flagship product"
+  },
+  "delivery": {
+    "pageEyebrow": "Delivery & Pricing",
+    "pageTitle": "How delivery and pricing work",
+    "intro": "We never publish a price upfront. Price depends on three things:",
+    "factor1Title": "Product and variant",
+    "factor1Body": "Auto brick, picket brick, jhama — each has its own rate.",
+    "factor2Title": "Quantity",
+    "factor2Body": "Per 1,000 pieces, per truck, per CFT, per bag, or per ton — whichever unit you buy in.",
+    "factor3Title": "Delivery address",
+    "factor3Body": "How far from Singair, and the road condition at the site.",
+    "zonesTitle": "Our main delivery zones",
+    "zonesSubtitle": "These are our most familiar routes. We do go beyond — please call first.",
+    "vehiclesTitle": "Our trucks",
+    "vehiclesSubtitle": "Our own fleet, so on-time delivery is on us.",
+    "askTitle": "Get today's price",
+    "askBody": "A short call or WhatsApp — we share the rate at the day's market."
+  },
+  "contact": {
+    "pageEyebrow": "Contact",
+    "pageTitle": "Talk to us",
+    "pageSubtitle": "These are the only two channels. We pick up on both.",
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "address": "Address",
+    "facebook": "Facebook",
+    "hours": "Hours",
+    "hoursValue": "7 AM – 9 PM (no weekly off)"
+  },
+  "estimator": {
+    "pageEyebrow": "Estimator",
+    "pageTitle": "How much will your project need?",
+    "pageSubtitle": "We won't quote a price, but we can give you a sense of the quantity.",
+    "product": "Product",
+    "area": "Area / quantity",
+    "areaHint": "Floor area, CFT, or rough brick count",
+    "result": "Rough estimate",
+    "resultHint": "This is only a sense. The exact number and price come from a call.",
+    "calc": "Calculate",
+    "unit": "Unit",
+    "qty": "Quantity",
+    "footer": "These numbers come from general experience. Mortar, cement, and rebar calculations are different. Call us for the exact quantity and price."
+  },
+  "404": {
+    "title": "Page not found",
+    "body": "There's nothing at this address. The link may be wrong or the page may have moved.",
+    "home": "Back to home",
+    "contact": "Contact us"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "addressLabel": "Address",
+    "quickLinks": "Quick links",
+    "products": "Products",
+    "contact": "Contact"
+  },
+  "whatsapp": {
+    "greeting": "Assalamu Alaikum",
+    "intro": "I'd like to know today's price from M/S Biswas Traders",
+    "product": "Product",
+    "quantity": "Quantity",
+    "location": "Delivery address",
+    "notSpecified": "not specified",
+    "signature": "Thank you"
+  },
+  "styleguide": {
+    "title": "Design styleguide",
+    "subtitle": "Tokens, fonts and components in one place",
+    "tokensTitle": "Tokens & colors",
+    "fontsTitle": "Fonts",
+    "componentsTitle": "Components",
+    "statesTitle": "States"
+  }
+}
