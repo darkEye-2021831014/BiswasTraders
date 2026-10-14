@@ -7,19 +7,33 @@ import { ArrowIcon } from "@/components/ui/icons/ArrowIcon";
 import { site } from "@/content/site";
 import { pick } from "@/i18n/l10n";
 import type { Locale } from "@/i18n/config";
+import type { ServiceZone } from "@/content/site";
 
 /**
- * Delivery teaser. Left: zone chips pulled from site.serviceZones (the
- * site content file already seeds five zones — distances are TODO(owner)
- * and only shown when the value is set). Right: a vehicle-fit mini-matrix
- * that maps our three trucks to where they fit best. The matrix hides
- * entirely when site.vehicles is empty (e.g. if the owner removes them).
+ * Home-page delivery teaser. Same data, same grouping logic, and the
+ * same "not listed" line as /delivery, just in compact form.
  *
- * Always links to /delivery for the full story.
+ *  - Left: zone chips pulled from site.serviceZones, split into
+ *    Core / Extended groups (when both groups are present in data).
+ *  - Right: a vehicle-fit mini-matrix that maps our three trucks to
+ *    where they fit best. Hides entirely when site.vehicles is empty.
+ *  - Always links to /delivery for the full story.
  */
 export async function DeliveryTeaser({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale });
   const showVehicles = site.vehicles.length > 0;
+
+  const coreZones = site.serviceZones.filter(
+    (z: ServiceZone) => z.group === "core"
+  );
+  const extendedZones = site.serviceZones.filter(
+    (z: ServiceZone) => z.group === "extended"
+  );
+  const hasBothGroups = coreZones.length > 0 && extendedZones.length > 0;
+  const onlyOneGroup =
+    (coreZones.length > 0 && extendedZones.length === 0) ||
+    (extendedZones.length > 0 && coreZones.length === 0);
+
   return (
     <section className="py-12 md:py-16 bg-canvas border-b border-line">
       <Container>
@@ -45,26 +59,35 @@ export async function DeliveryTeaser({ locale }: { locale: Locale }) {
                 {t("home.deliveryEyebrow")}
               </span>
             </div>
-            <ul className="flex flex-wrap gap-2">
-              {site.serviceZones.map((z) => (
-                <li
-                  key={z.id}
-                  className="inline-flex items-center gap-2 border border-charcoal/40 bg-canvas px-3 h-9 text-sm"
-                  style={{ borderRadius: 2 }}
-                >
-                  <span
-                    aria-hidden
-                    className="w-1.5 h-1.5 bg-orange rounded-full"
-                  />
-                  <span className="font-display">{pick(z.name, locale)}</span>
-                  {z.distanceKm !== null ? (
-                    <span className="text-[11px] text-charcoal/60 tabular">
-                      ~ {z.distanceKm} km
-                    </span>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
+
+            {hasBothGroups ? (
+              <div className="space-y-3">
+                <ZoneGroup
+                  title={t("home.deliveryZonesCore")}
+                  zones={coreZones}
+                  locale={locale}
+                />
+                <ZoneGroup
+                  title={t("home.deliveryZonesExtended")}
+                  zones={extendedZones}
+                  locale={locale}
+                />
+              </div>
+            ) : onlyOneGroup ? (
+              <ZoneGroup
+                title={
+                  coreZones.length > 0
+                    ? t("home.deliveryZonesCore")
+                    : t("home.deliveryZonesExtended")
+                }
+                zones={site.serviceZones}
+                locale={locale}
+              />
+            ) : null}
+
+            <p className="mt-3 text-[11px] text-charcoal/60 italic">
+              {t("home.deliveryNotListed")}
+            </p>
           </Card>
 
           {showVehicles ? (
@@ -152,5 +175,43 @@ export async function DeliveryTeaser({ locale }: { locale: Locale }) {
         </div>
       </Container>
     </section>
+  );
+}
+
+function ZoneGroup({
+  title,
+  zones,
+  locale,
+}: {
+  title: string;
+  zones: ServiceZone[];
+  locale: Locale;
+}) {
+  return (
+    <div>
+      <div className="text-[10px] uppercase tracking-eyebrow text-charcoal/60 font-display mb-1.5">
+        {title}
+      </div>
+      <ul className="flex flex-wrap gap-2">
+        {zones.map((z) => (
+          <li
+            key={z.id}
+            className="inline-flex items-center gap-2 border border-charcoal/40 bg-canvas px-3 h-9 text-sm"
+            style={{ borderRadius: 2 }}
+          >
+            <span
+              aria-hidden
+              className="w-1.5 h-1.5 bg-orange rounded-full"
+            />
+            <span className="font-display">{pick(z.name, locale)}</span>
+            {z.distanceKm !== null ? (
+              <span className="text-[11px] text-charcoal/60 tabular">
+                ~ {z.distanceKm} km
+              </span>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

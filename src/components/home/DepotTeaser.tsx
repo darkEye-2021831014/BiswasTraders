@@ -1,25 +1,38 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { IconMap, IconFacebook } from "@/components/ui/icons";
+import { ArrowIcon } from "@/components/ui/icons/ArrowIcon";
 import { site } from "@/content/site";
+import { pick } from "@/i18n/l10n";
 import type { Locale } from "@/i18n/config";
 
 /**
  * Depot teaser — address, hours (only if set), Google Maps button (only
- * if site.googleMapsUrl is set), and a Facebook link. Rendered as a
- * single card with a small map-style ornament on the right.
+ * if site.googleMapsUrl is set), and a Facebook link. Renders the same
+ * data as the /contact page; the "See full contact" link carries the
+ * user to the long-form version.
  */
 export async function DepotTeaser({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale });
   return (
     <section className="py-12 md:py-16 bg-canvas">
       <Container>
-        <SectionHeading
-          eyebrow={t("home.depotEyebrow")}
-          title={t("home.depotTitle")}
-        />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+          <SectionHeading
+            eyebrow={t("home.depotEyebrow")}
+            title={t("home.depotTitle")}
+          />
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-1 self-start md:self-auto text-sm font-display uppercase tracking-label border border-charcoal h-12 px-4 hover:bg-sand"
+            style={{ borderRadius: 2 }}
+          >
+            {t("nav.contact")} <ArrowIcon className="w-3 h-3" />
+          </Link>
+        </div>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-4">
           <Card className="flex flex-col gap-4">
             <div>
@@ -49,7 +62,7 @@ export async function DepotTeaser({ locale }: { locale: Locale }) {
                     {t("home.depotOpeningHours")}
                   </div>
                   <div className="font-display text-sm">
-                    {site.hours[locale]}
+                    {pick(site.hours.general, locale)}
                   </div>
                 </div>
               ) : null}

@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
 import { site } from "@/content/site";
+import { pick } from "@/i18n/l10n";
 import { telHref, waMeHref } from "@/lib/contact";
 import { IconFacebook, IconMap } from "@/components/ui/icons";
 import { PhoneIcon } from "@/components/ui/icons/PhoneIcon";
@@ -165,7 +166,7 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
               <div className="text-[10px] uppercase tracking-eyebrow text-canvas/60 font-display">
                 {t("footer.openHours")}
               </div>
-              <div className="text-sm mt-1">{site.hours[locale]}</div>
+              <div className="text-sm mt-1">{pick(site.hours.general, locale)}</div>
             </div>
           ) : null}
         </section>
