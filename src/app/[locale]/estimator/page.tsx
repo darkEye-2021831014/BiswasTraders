@@ -17,6 +17,7 @@ export default async function EstimatorPage({ params }: { params: { locale: Loca
     <section className="py-10 md:py-14">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow={t("estimator.pageEyebrow")}
           title={t("estimator.pageTitle")}
           subtitle={t("estimator.pageSubtitle")}

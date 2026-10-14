@@ -8,9 +8,27 @@
   "nav": {
     "home": "Home",
     "products": "Products",
+    "bricks": "Bricks",
+    "allMaterials": "All materials",
     "delivery": "Delivery & Pricing",
     "contact": "Contact",
-    "estimator": "Estimator"
+    "estimator": "Estimator",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content"
+  },
+  "header": {
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchToEnglish": "Switch to English",
+    "switchToBangla": "Switch to বাংলা"
+  },
+  "utility": {
+    "addressLabel": "Address",
+    "openHours": "Open"
+  },
+  "notice": {
+    "dismiss": "Dismiss"
   },
   "actions": {
     "callNow": "Call now",
@@ -120,7 +138,15 @@
     "addressLabel": "Address",
     "quickLinks": "Quick links",
     "products": "Products",
-    "contact": "Contact"
+    "contact": "Contact",
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "openInMaps": "Open in Google Maps ↗",
+    "openHours": "Hours"
+  },
+  "sticky": {
+    "call": "Call",
+    "whatsapp": "WhatsApp"
   },
   "whatsapp": {
     "greeting": "Assalamu Alaikum",

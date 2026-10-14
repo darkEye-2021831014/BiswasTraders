@@ -15,6 +15,7 @@ export default async function ContactPage({ params }: { params: { locale: Locale
     <section className="py-10 md:py-14">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow={t("contact.pageEyebrow")}
           title={t("contact.pageTitle")}
           subtitle={t("contact.pageSubtitle")}

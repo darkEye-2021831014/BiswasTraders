@@ -13,6 +13,7 @@ export default async function ProductsPage({ params }: { params: { locale: Local
     <section className="py-10 md:py-14">
       <Container>
         <SectionHeading
+          as="h1"
           eyebrow={t("products.pageEyebrow")}
           title={t("products.pageTitle")}
           subtitle={t("products.pageSubtitle")}

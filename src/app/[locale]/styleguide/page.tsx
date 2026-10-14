@@ -45,6 +45,7 @@ export default async function StyleguidePage({ params }: { params: { locale: Loc
       <Container>
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <SectionHeading
+            as="h1"
             eyebrow="INTERNAL"
             title={t("styleguide.title")}
             subtitle={t("styleguide.subtitle")}

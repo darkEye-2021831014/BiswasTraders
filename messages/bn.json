@@ -8,9 +8,27 @@
   "nav": {
     "home": "হোম",
     "products": "পণ্য",
+    "bricks": "ইট",
+    "allMaterials": "সব পণ্য",
     "delivery": "ডেলিভারি ও মূল্য",
     "contact": "যোগাযোগ",
-    "estimator": "হিসাব"
+    "estimator": "হিসাব",
+    "menu": "মেনু",
+    "closeMenu": "মেনু বন্ধ করুন",
+    "skipToContent": "কন্টেন্টে যান"
+  },
+  "header": {
+    "openMenu": "মেনু খুলুন",
+    "closeMenu": "মেনু বন্ধ করুন",
+    "switchToEnglish": "Switch to English",
+    "switchToBangla": "বাংলায় দেখুন"
+  },
+  "utility": {
+    "addressLabel": "ঠিকানা",
+    "openHours": "খোলা আছে"
+  },
+  "notice": {
+    "dismiss": "বন্ধ করুন"
   },
   "actions": {
     "callNow": "এখনই কল করুন",
@@ -120,7 +138,15 @@
     "addressLabel": "ঠিকানা",
     "quickLinks": "দ্রুত লিংক",
     "products": "পণ্য",
-    "contact": "যোগাযোগ"
+    "contact": "যোগাযোগ",
+    "phone": "ফোন",
+    "whatsapp": "WhatsApp",
+    "openInMaps": "Google Maps-এ দেখুন ↗",
+    "openHours": "সময়"
+  },
+  "sticky": {
+    "call": "কল",
+    "whatsapp": "WhatsApp"
   },
   "whatsapp": {
     "greeting": "আসসালামু আলাইকুম",

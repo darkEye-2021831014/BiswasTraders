@@ -19,6 +19,7 @@ export default async function DeliveryPage({ params }: { params: { locale: Local
       <section className="py-10 md:py-14">
         <Container>
           <SectionHeading
+            as="h1"
             eyebrow={t("delivery.pageEyebrow")}
             title={t("delivery.pageTitle")}
           />
