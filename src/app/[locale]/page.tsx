@@ -44,8 +44,8 @@ export function generateMetadata({
 }): Metadata {
   return buildMetadata({
     locale: params.locale,
-    titleBn: "মেসার্স বিশ্বাস ট্রেডার্স — সিঙ্গাইর, মানিকগঞ্জ",
-    titleEn: "M/S Biswas Traders — Singair, Manikganj",
+    titleBn: "মেসার্স বিশ্বাস ট্রেডার্স",
+    titleEn: "M/S Biswas Traders",
     descriptionBn:
       "ইট, বালু, খোয়া, সিমেন্ট ও রড — সিঙ্গাইর, মানিকগঞ্জ থেকে আমাদের নিজস্ব ট্রাকে সরবরাহ। আজকের রেট জানতে কল বা WhatsApp করুন।",
     descriptionEn:

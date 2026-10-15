@@ -41,11 +41,14 @@ const hindSiliguri = Hind_Siliguri({
 });
 
 export const metadata: Metadata = {
-  // The /[locale] layout adds the localized title via the title.template
-  // pattern, but Next still needs an absolute default here.
+  // The browser tab is just the business name. Per-page titles
+  // still flow through the template so the locale layouts can set a
+  // localized product/page name; we don't append a redundant
+  // " — M/S Biswas Traders" because every page already has the
+  // brand in its <SiteHeader>, and the tab should be tight.
   title: {
-    default: "M/S Biswas Traders — Bricks & Building Materials, Singair, Manikganj",
-    template: "%s — M/S Biswas Traders",
+    default: "M/S Biswas Traders",
+    template: "%s",
   },
   description:
     "Bricks, sand, khoa, cement and rebar — delivered in our own trucks from Singair, Manikganj. Call or WhatsApp for today's rate.",
