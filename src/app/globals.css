@@ -265,15 +265,17 @@ html[lang="bn"] h6 {
   background: transparent;
 }
 .stamp--light {
-  /* Borderless, white text on a transparent fill.
+  /* Cream text on a semi-transparent navy pill.
    * Used on top of photographic backgrounds (the Hero brick image)
-   * where the brick-red tone would swallow any charcoal outline.
-   * Removing the border keeps the marker minimal so it sits on
-   * top of the photo without competing with the imagery. */
+   * where the brick-red and lighter patches would swallow any
+   * borderless text. The navy fill matches the page's navy chrome
+   * and keeps the marker readable across the whole photo, while
+   * the cream tone sits cleanly against both the orange-red bricks
+   * and the cooler shadows. Reads like a postage-cancellation stamp
+   * with a built-in ground. */
   border-color: transparent;
-  color: var(--color-canvas);
-  background: transparent;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  color: #fff4e0;
+  background: rgba(10, 25, 41, 0.7);
 }
 .stamp--orange {
   border-color: var(--color-orange);
