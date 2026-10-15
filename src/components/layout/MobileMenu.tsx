@@ -82,10 +82,18 @@ export function MobileMenu({ locale, otherLocale, labels }: Props) {
     return () => window.cancelAnimationFrame(id);
   }, [open]);
 
-  // Close on route change.
+  // Close on route change. With the locale switcher using a plain
+  // <a> (full page navigation) this still fires before the page
+  // swap, so the drawer doesn't appear "stuck open" on the new page.
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  // Locale switcher URL: deterministic plain anchor. The mobile menu
+  // closes itself on route change, so the full page navigation that
+  // the plain <a> triggers works correctly with the drawer state.
+  const cleanPath = pathname === "/" ? "" : pathname;
+  const switchTarget = otherLocale === "en" ? `/en${cleanPath}` : `/bn${cleanPath}`;
 
   // Close on Esc + simple focus trap.
   useEffect(() => {
@@ -226,9 +234,8 @@ export function MobileMenu({ locale, otherLocale, labels }: Props) {
               <div className="px-3 py-2 text-[10px] uppercase tracking-eyebrow text-canvas/60 font-display">
                 {labels.languageHeading}
               </div>
-              <Link
-                href={pathname}
-                locale={otherLocale}
+              <a
+                href={switchTarget}
                 className="min-h-12 px-3 flex items-center justify-between gap-2 font-display uppercase tracking-label text-sm text-canvas/85 hover:text-canvas hover:bg-white/5 border-l-2 border-transparent"
                 style={{ borderRadius: 2 }}
                 aria-label={
@@ -239,7 +246,7 @@ export function MobileMenu({ locale, otherLocale, labels }: Props) {
               >
                 <span>{otherLocale === "en" ? "EN — English" : "বাং — বাংলা"}</span>
                 <span aria-hidden className="text-canvas/50">⇌</span>
-              </Link>
+              </a>
             </div>
           </nav>
           <div className="p-3 border-t border-canvas/10 grid grid-cols-2 gap-2">

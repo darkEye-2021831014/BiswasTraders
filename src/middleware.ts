@@ -3,30 +3,35 @@ import createMiddleware from "next-intl/middleware";
 import { defaultLocale, locales, isLocale } from "@/i18n/config";
 
 /**
- * Cookie set by next-intl when the user explicitly toggles the locale
- * via the LocaleSwitch. We treat it as a *fallback only* — the URL
- * always wins. Without this override, next-intl's own middleware
- * honours the cookie even when the user just clicked a /<locale>/
- * link, which makes the LocaleSwitch round-trip fail (click EN,
- * then বাং, end up back on English).
+ * Locale resolution rules (single source of truth).
+ *
+ * The URL is the only ground truth for which locale a request is for.
+ * The `NEXT_LOCALE` cookie is treated as a STICKY PREFERENCE only:
+ * it is set on the way out based on which locale the visitor was just
+ * on, and used by the very next unprefixed visit when there is no
+ * stronger signal. It is NEVER used to override an explicit `/<locale>/`
+ * prefix in the URL.
+ *
+ * Why this is necessary: next-intl's own middleware, with
+ * `localePrefix: "as-needed"`, honours the `NEXT_LOCALE` cookie and
+ * will redirect `/contact` to `/en/contact` if the cookie is `en`,
+ * even when the user just clicked a LocaleSwitch that emits `/en/...`
+ * (or `bn/...`) on a page that was previously `/contact`. That made
+ * the LocaleSwitch round-trip fail: the click would route to a
+ * prefixed URL, the middleware would strip the prefix, then redirect
+ * to the cookie's locale, and the user would never see the locale
+ * they just chose. The fix is to give next-intl an *empty* cookie
+ * header so it can only use the URL.
  */
 const LOCALE_COOKIE = "NEXT_LOCALE";
 
-/**
- * next-intl middleware. With `localePrefix: "as-needed"` the default
- * locale (`bn`) is served at the unprefixed URL, and `/en/...` is the
- * explicit English tree.
- */
 const intl = createMiddleware({
   locales: [...locales],
   defaultLocale,
   localePrefix: "as-needed",
 });
 
-/**
- * Strip the leading `/<locale>` segment from a pathname and return the
- * remaining path (e.g. "/en/contact" -> "/contact", "/bn" -> "/").
- */
+/** Strip the leading `/<locale>` segment. "/en/contact" -> "/contact". */
 function stripLocale(pathname: string): string {
   const seg = pathname.split("/", 2)[1];
   if (seg && isLocale(seg)) {
@@ -37,85 +42,92 @@ function stripLocale(pathname: string): string {
 }
 
 /**
- * Run next-intl middleware with a temporarily-cleared locale cookie
- * so the URL is the *only* signal next-intl uses to pick a locale.
+ * Forward a request through next-intl with the locale cookie blanked
+ * out, so the URL is the only locale signal next-intl can use.
  *
- * We do this by writing a blank `Cookie:` header onto the forwarded
- * request. Any `set-cookie` from next-intl on the response is
- * preserved (it lands on the visitor's next navigation), and we
- * attach a separate `set-cookie` to *delete* the stale value from
- * the visitor's jar so future unprefixed visits also stay on bn.
+ * We construct a new NextRequest (rather than mutating the original
+ * headers) because the runtime treats the original request headers
+ * as immutable in middleware.
  */
-function intlWithoutCookie(req: NextRequestType): NextResponse {
+function intlWithoutLocaleCookie(req: NextRequestType): NextResponse {
   const headers = new Headers(req.headers);
-  headers.set(
-    "cookie",
-    // Wipe the locale cookie by overwriting it with an empty value.
-    // Anything else in the cookie jar is dropped too, which is
-    // acceptable for this site (no other cookies are used).
-    "",
-  );
-  const res = intl(
-    new NextRequest(req.nextUrl, {
-      method: req.method,
-      headers,
-      // body is not relevant for a GET, but keep it forward-safe.
-    }),
-  );
-  return res;
+  // Wipe the cookie header entirely — we want next-intl to act as if
+  // the visitor has no cookie, and pick the locale purely from the
+  // URL. There are no other cookies in this app to preserve.
+  headers.delete("cookie");
+  const forwarded = new NextRequest(req.nextUrl, {
+    method: req.method,
+    headers,
+  });
+  return intl(forwarded);
+}
+
+/**
+ * Set a sticky-preference cookie on the response indicating which
+ * locale the visitor is *currently* on. We only do this for the
+ * non-default locale — visitors who land on the unprefixed tree
+ * don't need a cookie because the unprefixed URL is itself the
+ * default signal.
+ */
+function stampLocaleCookie(res: NextResponse, locale: string) {
+  if (locale !== "en" && locale !== "bn") return;
+  res.cookies.set(LOCALE_COOKIE, locale, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
 }
 
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const firstSegment = pathname.split("/", 2)[1] ?? "";
+  const hasLocalePrefix = isLocale(firstSegment);
+  const urlLocale = hasLocalePrefix ? firstSegment : null;
   const cookieLocale = req.cookies.get(LOCALE_COOKIE)?.value;
-  const hasLocalePrefix = isLocale(pathname.split("/", 2)[1] ?? "");
+  const validCookieLocale =
+    cookieLocale && isLocale(cookieLocale) ? cookieLocale : null;
 
   // 1. URL has an explicit `/<locale>/...` prefix that disagrees with
-  //    the cookie. The URL wins: the user (or a shared link) just
-  //    typed/clicked that locale, so the cookie is treated as stale.
-  //    For the default locale we strip the prefix; for any other
-  //    locale we keep it. Either way we clear the cookie on the
-  //    response so the next unprefixed navigation isn't hijacked.
-  if (hasLocalePrefix && cookieLocale && isLocale(cookieLocale)) {
-    const urlInPrefix = pathname.split("/", 2)[1];
-    if (urlInPrefix !== cookieLocale) {
-      const cleanPath = stripLocale(pathname);
-      const redirectUrl = req.nextUrl.clone();
-      redirectUrl.pathname =
-        urlInPrefix === defaultLocale
-          ? cleanPath
-          : `/${urlInPrefix}${cleanPath === "/" ? "" : cleanPath}`;
-      const res = NextResponse.redirect(redirectUrl);
-      res.cookies.set(LOCALE_COOKIE, "", { path: "/", maxAge: 0 });
-      return res;
-    }
+  //    the cookie. The URL wins. We redirect to a clean URL in the
+  //    chosen locale (stripping the prefix for the default `bn`,
+  //    keeping it for `en`) and clear the cookie so future unprefixed
+  //    visits also stay on the right locale.
+  if (urlLocale && validCookieLocale && urlLocale !== validCookieLocale) {
+    const cleanPath = stripLocale(pathname);
+    const redirectUrl = req.nextUrl.clone();
+    redirectUrl.pathname =
+      urlLocale === defaultLocale
+        ? cleanPath
+        : `/${urlLocale}${cleanPath === "/" ? "" : cleanPath}`;
+    const res = NextResponse.redirect(redirectUrl);
+    res.cookies.set(LOCALE_COOKIE, "", { path: "/", maxAge: 0 });
+    return res;
   }
 
-  // 2. From here the URL is the source of truth.
-  //    - `/<locale>/...` with cookie matching  -> serve that locale
-  //    - `/<locale>/...` with no cookie        -> serve that locale
-  //    - `/...` (unprefixed) with no cookie    -> default locale (bn)
-  //    - `/...` (unprefixed) with cookie=en    -> user is back on a
-  //                                              clean URL after
-  //                                              switching; we still
-  //                                              want them on bn
-  //                                              (the URL is the
-  //                                              ground truth here),
-  //                                              so drop the cookie
-  //                                              and serve bn.
-  //
-  //    In all cases we ask next-intl to *ignore* the cookie, by
-  //    stripping the cookie header on the forwarded request. This
-  //    prevents next-intl from re-redirecting `/contact` to
-  //    `/en/contact` on the basis of a stale `NEXT_LOCALE=en`.
-  const res = intlWithoutCookie(req);
+  // 2. Hand the request to next-intl with the cookie blanked. This
+  //    is the core fix: next-intl now picks a locale purely from the
+  //    URL, so a stale `NEXT_LOCALE=en` cookie can't hijack the
+  //    unprefixed-URL tree.
+  const res = intlWithoutLocaleCookie(req);
 
-  // If the unprefixed URL would have been hijacked by a stale cookie
-  // (i.e. cookie was `en` and the URL had no prefix), make sure we
-  // also clear that cookie on the response so it doesn't keep
-  // poisoning future unprefixed visits.
-  if (!hasLocalePrefix && cookieLocale === "en") {
-    res.cookies.set(LOCALE_COOKIE, "", { path: "/", maxAge: 0 });
+  // 3. Stamp a fresh sticky-preference cookie on the response so
+  //    the *next* unprefixed visit (if any) still has a hint about
+  //    which locale the visitor prefers. We let the URL drive the
+  //    current request; the cookie only takes effect on the next
+  //    unprefixed visit, where it'll be in the cookie header on the
+  //    *incoming* request — and branch 1 above will clear it again
+  //    if it disagrees with the URL.
+  //
+  //    For the unprefixed URL we want the cookie to say `bn`
+  //    (the default). For a prefixed URL we want the cookie to say
+  //    whatever locale is in the URL.
+  if (urlLocale) {
+    stampLocaleCookie(res, urlLocale);
+  } else if (validCookieLocale !== defaultLocale) {
+    // Unprefixed visit. If the existing cookie was something other
+    // than the default (e.g. `en`), refresh it to `bn` so a future
+    // branch-1 redirect doesn't bounce this visitor off the
+    // unprefixed tree.
     res.cookies.set(LOCALE_COOKIE, defaultLocale, {
       path: "/",
       maxAge: 60 * 60 * 24 * 365,
@@ -129,4 +141,3 @@ export default function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
-
