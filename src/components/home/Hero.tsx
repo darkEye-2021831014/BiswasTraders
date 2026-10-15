@@ -58,7 +58,7 @@ export async function Hero({ locale }: { locale: Locale }) {
           <div>
             <div className="relative border border-canvas/20 bg-canvas/[0.04] p-3 md:p-4 shadow-stamp" style={{ borderRadius: 2 }}>
               <div className="absolute top-3 left-3 z-10">
-                <Badge tone="ink">
+                <Badge tone="light">
                   <span
                     aria-hidden
                     className="w-1.5 h-1.5 bg-orange rounded-full"

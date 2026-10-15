@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 
-type Tone = "default" | "dark" | "ink" | "orange" | "brick" | "navy";
+type Tone = "default" | "dark" | "ink" | "light" | "orange" | "brick" | "navy";
 
 const toneClass: Record<Tone, string> = {
   default: "stamp",
   dark: "stamp stamp--dark",
   ink: "stamp stamp--ink",
+  light: "stamp stamp--light",
   orange: "stamp stamp--orange",
   brick: "stamp stamp--brick",
   navy: "stamp stamp--navy",
