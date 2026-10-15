@@ -1,5 +1,4 @@
 import { setRequestLocale } from "next-intl/server";
-import dynamic from "next/dynamic";
 import { Hero } from "@/components/home/Hero";
 import { TrustStrip } from "@/components/home/TrustStrip";
 import { BrickSpotlight } from "@/components/home/BrickSpotlight";
@@ -19,18 +18,7 @@ import type { Locale } from "@/i18n/config";
 import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 import { gallery } from "@/content/gallery";
-
-// YardPhotoGallery is "use client" (the lightbox needs JS). When the
-// gallery is empty (the default state) we don't want its bundle to
-// count against the home-page JS budget at all, so we load it with
-// `ssr: false` and only when there's something to render.
-const YardPhotoGallery = dynamic(
-  () =>
-    import("@/components/gallery/YardPhotoGallery").then(
-      (m) => m.YardPhotoGallery,
-    ),
-  { ssr: false },
-);
+import { YardPhotoGallery } from "@/components/gallery/YardPhotoGallery";
 
 /**
  * Home-page metadata. The site is Bangla-only, so a single Bangla
@@ -56,8 +44,9 @@ export function generateMetadata({
  * the other four, how price works, how ordering works, where we go, where
  * to find us, an FAQ, a yard photo gallery, and a final action.
  *
- * Every section is a server component. The yard gallery wraps itself
- * in "use client" because of its lightbox.
+ * Every section is a server component except the lightbox island
+ * inside `YardPhotoGallery`, which is a small "use client" component
+ * that owns only the open/close state of the photo modal.
  */
 export default async function HomePage({ params }: { params: { locale: Locale } }) {
   setRequestLocale(params.locale);
