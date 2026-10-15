@@ -11,11 +11,11 @@ import { WhatsAppIcon } from "@/components/ui/icons/WhatsAppIcon";
 import type { Locale } from "@/i18n/config";
 
 const PRODUCT_LINKS = [
-  { href: "/products/bricks", key: "ইট", en: "Bricks" },
-  { href: "/products/sand", key: "বালু", en: "Sand" },
-  { href: "/products/khoa", key: "খোয়া", en: "Khoa" },
-  { href: "/products/cement", key: "সিমেন্ট", en: "Cement" },
-  { href: "/products/rod", key: "রড", en: "Rebar" },
+  { href: "/products/bricks", label: "ইট" },
+  { href: "/products/sand", label: "বালু" },
+  { href: "/products/khoa", label: "খোয়া" },
+  { href: "/products/cement", label: "সিমেন্ট" },
+  { href: "/products/rod", label: "রড" },
 ] as const;
 
 export async function SiteFooter({ locale }: { locale: Locale }) {
@@ -67,13 +67,13 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
                   className="hover:underline"
                   href={p.href as `/products/${string}`}
                 >
-                  {locale === "bn" ? p.key : p.en}
+                  {p.label}
                 </Link>
               </li>
             ))}
             <li>
               <Link className="hover:underline" href="/products">
-                {locale === "bn" ? "সব পণ্য →" : "All products →"}
+                {"সব পণ্য →"}
               </Link>
             </li>
           </ul>

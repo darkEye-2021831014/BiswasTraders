@@ -277,7 +277,7 @@ function validateRaw(
   if (err === "tooBig") return labels.validateTooBig;
   if (err === "nan") return labels.validateNan;
   // Fallback — should never reach here.
-  return locale === "bn" ? "ত্রুটি" : "Error";
+  return "ত্রুটি";
 }
 
 // ---------------------------------------------------------------------------

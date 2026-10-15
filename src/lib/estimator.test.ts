@@ -74,10 +74,6 @@ describe("parseLocalizedNumber (Bangla digits)", () => {
 });
 
 describe("formatLocalizedNumber", () => {
-  it("formats English in Latin digits", () => {
-    expect(formatLocalizedNumber(1234.5, "en")).toBe("1,234.5");
-  });
-
   it("formats Bangla in Bengali digits", () => {
     // bn-BD locale uses Bengali digits ০-৯
     const out = formatLocalizedNumber(1234.5, "bn");
@@ -97,8 +93,8 @@ describe("formatLocalizedNumber", () => {
   });
 
   it("never returns NaN for non-finite input", () => {
-    expect(formatLocalizedNumber(NaN, "en")).toBe("0");
-    expect(formatLocalizedNumber(Infinity, "en")).toBe("0");
+    expect(formatLocalizedNumber(NaN, "bn")).toBe("0");
+    expect(formatLocalizedNumber(Infinity, "bn")).toBe("0");
   });
 });
 

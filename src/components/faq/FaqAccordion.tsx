@@ -59,9 +59,7 @@ export async function FaqAccordion({
               <p>{item.answer}</p>
               {item.unconfirmed ? (
                 <p className="mt-2 text-xs italic text-charcoal/70">
-                  {locale === "bn"
-                    ? "সঠিক তথ্যের জন্য ফোনে জেনে নিন।"
-                    : "Please confirm the exact details on a call."}
+                  সঠিক তথ্যের জন্য ফোনে জেনে নিন।
                 </p>
               ) : null}
             </div>

@@ -15,11 +15,8 @@ export function generateMetadata({
   return buildMetadata({
     locale: params.locale,
     titleBn: "হিসাবকারী — ইট, কংক্রিট, সিএফটি",
-    titleEn: "Estimator — bricks, concrete, cft",
     descriptionBn:
       "আপনার কাজের জন্য কতটুকু ইট, সিমেন্ট, বালু বা খোয়া লাগবে — হিসাব করে দেখুন।",
-    descriptionEn:
-      "Estimate how many bricks, cement, sand or khoa your job needs.",
     path: "/estimator",
   });
 }

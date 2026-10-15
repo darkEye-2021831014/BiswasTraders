@@ -1,13 +1,13 @@
 /**
- * FAQ list. The Q/A text lives in the i18n message bundles
- * (messages/bn.json and messages/en.json) under the `faq` key — so
- * they're easy to update without touching code. This file just
- * declares the order of questions and a stable id for each, which the
- * FAQ accordion and the FAQPage JSON-LD both consume.
+ * FAQ list. The Q/A text lives in the i18n message bundle
+ * (messages/bn.json) under the `faq` key — so it's easy to update
+ * without touching code. This file just declares the order of
+ * questions and a stable id for each, which the FAQ accordion and the
+ * FAQPage JSON-LD both consume.
  *
  * Adding a new question:
- *   1. Add `q<n>` and `a<n>` strings to messages/bn.json and
- *      messages/en.json under the `faq` key.
+ *   1. Add `q<n>` and `a<n>` strings to messages/bn.json under the
+ *      `faq` key.
  *   2. Append a new entry to the array below with the same `<n>` id.
  *   3. (Optional) Add a `// TODO(owner): confirm the answer` comment
  *      if the answer is an unconfirmed fact — those should be phrased
@@ -17,9 +17,9 @@
 
 export type FaqEntry = {
   id: string;
-  /** The q-key in messages/{bn,en}.json (without the namespace prefix). */
+  /** The q-key in messages/bn.json (without the namespace prefix). */
   questionKey: string;
-  /** The a-key in messages/{bn,en}.json (without the namespace prefix). */
+  /** The a-key in messages/bn.json (without the namespace prefix). */
   answerKey: string;
   /**
    * If true, the answer is unconfirmed and should make the user call

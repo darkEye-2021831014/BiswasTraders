@@ -36,11 +36,8 @@ export async function generateMetadata({
   return buildMetadata({
     locale: params.locale,
     titleBn: "ডেলিভারি ও মূল্য নির্ধারণ",
-    titleEn: "Delivery & how the price is decided",
     descriptionBn:
       "ডেলিভারি এলাকা, গাড়ির ধরন এবং মূল্য কীভাবে ঠিক হয় — সবকিছু খোলামেলা বলা।",
-    descriptionEn:
-      "Delivery zones, vehicle types, and how the rate is decided — all in plain language.",
     path: "/delivery",
   });
 }

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 type Props = {
   notice: L10n;
-  locale: "bn" | "en";
+  locale: "bn";
 };
 
 /**

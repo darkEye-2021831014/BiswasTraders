@@ -2,39 +2,36 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/content/site";
 import { absoluteUrl } from "@/lib/origin";
 import type { Locale } from "@/i18n/config";
-import { isLocale } from "@/i18n/config";
 
 /**
  * SEO helpers shared by every page.
  *
- * Goals:
- *   - Bangla (default) URLs and titles first
- *   - x-default + per-locale hreflang for every indexable page
- *   - Open Graph + Twitter card with a single shared /og.jpg
- *   - No `dangerouslySetInnerHTML` for JSON-LD in this file —
- *     structured data lives in dedicated components (see
- *     `LocalBusinessJsonLd`, `BreadcrumbListJsonLd`).
+ * The site is Bangla-only, so the per-page `buildMetadata` call
+ * doesn't need a separate English title or description. It just
+ * takes one Bangla title and description and returns a single
+ * canonical + Open Graph + Twitter block.
  *
- * Static /public/og.jpg is a 1200x630 PNG/JPG the owner can swap at
+ * No `dangerouslySetInnerHTML` for JSON-LD in this file —
+ * structured data lives in dedicated components (see
+ * `LocalBusinessJsonLd`, `BreadcrumbListJsonLd`).
+ *
+ * Static /public/og.jpg is a 1200x630 image the owner can swap at
  * any time without code changes.
  */
 
 const OG_PATH = "/og.jpg";
 
-/** Build canonical + hreflang + Open Graph + Twitter in one shot. */
+/** Build canonical + Open Graph + Twitter in one shot. */
 export function buildMetadata(opts: {
   locale: string;
-  /** Bangla title (the default-locale title). */
+  /** Bangla title for the page. */
   titleBn: string;
-  /** English title. */
-  titleEn: string;
-  /** Bangla description. */
+  /** Bangla description for the page. */
   descriptionBn: string;
-  /** English description. */
-  descriptionEn: string;
   /**
    * The path the page lives at, e.g. "/products/bricks" or "/contact".
-   * We do NOT include the locale prefix here — `localePath` adds it.
+   * We do NOT include a locale prefix here — the site is single-locale
+   * (Bangla) and is served at the unprefixed URL.
    */
   path: string;
   /** Set false to mark noindex (e.g. the styleguide). */
@@ -42,39 +39,29 @@ export function buildMetadata(opts: {
   /** Open Graph type. "website" for the home/landing pages, "article" for product details. */
   ogType?: "website" | "article";
 }): Metadata {
-  const locale: Locale = isLocale(opts.locale) ? opts.locale : "bn";
+  const locale: Locale = "bn";
   const index = opts.index !== false;
-  const title = locale === "bn" ? opts.titleBn : opts.titleEn;
-  const description = locale === "bn" ? opts.descriptionBn : opts.descriptionEn;
+  const title = opts.titleBn;
+  const description = opts.descriptionBn;
   // Canonical + hreflang bind to the request's host via runtimeOrigin()
   // so the same build works on localhost, staging, and production. The
   // og:image URL stays on SITE_URL because that asset is fetched by
   // crawlers / social cards long after the original request is gone.
   const canonical = absoluteUrl(locale, opts.path);
 
-  const languages: Record<string, string> = {
-    bn: absoluteUrl("bn", opts.path),
-    en: absoluteUrl("en", opts.path),
-  };
-  // x-default points at the Bangla page (our default locale) so search
-  // engines that don't have a clear language signal land on the canonical
-  // version.
-  languages["x-default"] = absoluteUrl("bn", opts.path);
-
   return {
     title,
     description,
     alternates: {
       canonical,
-      languages,
     },
     openGraph: {
       type: opts.ogType ?? "website",
-      siteName: "M/S Biswas Traders",
+      siteName: "মেসার্স বিশ্বাস ট্রেডার্স",
       title,
       description,
       url: canonical,
-      locale: locale === "bn" ? "bn_BD" : "en_US",
+      locale: "bn_BD",
       images: [
         {
           // /og.jpg is a build-time absolute URL — we want Facebook,
@@ -98,9 +85,3 @@ export function buildMetadata(opts: {
       : { index: false, follow: false },
   };
 }
-
-/** Title template (so we can re-use Next's `title.template` pattern). */
-export const TITLE_TEMPLATE = {
-  bn: "%s — মেসার্স বিশ্বাস ট্রেডার্স",
-  en: "%s — M/S Biswas Traders",
-};

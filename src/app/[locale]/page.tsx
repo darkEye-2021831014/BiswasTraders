@@ -33,9 +33,8 @@ const YardPhotoGallery = dynamic(
 );
 
 /**
- * Home-page metadata. Title + description live in the message files
- * (home.heroTitle / home.heroSubtitle) so BN/EN stay in sync, but we
- * hoist them into dedicated SEO keys here for stable title strings.
+ * Home-page metadata. The site is Bangla-only, so a single Bangla
+ * title + description is hoisted here for stable SEO strings.
  */
 export function generateMetadata({
   params,
@@ -45,11 +44,8 @@ export function generateMetadata({
   return buildMetadata({
     locale: params.locale,
     titleBn: "মেসার্স বিশ্বাস ট্রেডার্স",
-    titleEn: "M/S Biswas Traders",
     descriptionBn:
       "ইট, বালু, খোয়া, সিমেন্ট ও রড — সিঙ্গাইর, মানিকগঞ্জ থেকে আমাদের নিজস্ব ট্রাকে সরবরাহ। আজকের রেট জানতে কল বা WhatsApp করুন।",
-    descriptionEn:
-      "Bricks, sand, khoa, cement and rebar — delivered in our own trucks from Singair, Manikganj. Call or WhatsApp for today's rate.",
     path: "/",
   });
 }

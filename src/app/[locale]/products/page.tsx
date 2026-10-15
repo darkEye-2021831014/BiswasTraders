@@ -34,11 +34,8 @@ export async function generateMetadata({
   return buildMetadata({
     locale: params.locale,
     titleBn: "পণ্য — ইট, বালু, খোয়া, সিমেন্ট, রড",
-    titleEn: "Products — Bricks, sand, khoa, cement, rebar",
     descriptionBn:
       "মেসার্স বিশ্বাস ট্রেডার্সের পাঁচটি পণ্য এক নজরে। দামের জন্য ফোন বা WhatsApp করুন।",
-    descriptionEn:
-      "Five products from M/S Biswas Traders. Call or WhatsApp for today's rate.",
     path: "/products",
   });
 }

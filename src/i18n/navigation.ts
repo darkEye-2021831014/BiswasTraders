@@ -2,12 +2,11 @@ import { createSharedPathnamesNavigation } from "next-intl/navigation";
 import { locales } from "./config";
 
 /**
- * `localePrefix: "as-needed"` must stay in lock-step with the
- * `createMiddleware` config in `src/middleware.ts`. If they ever
- * drift, the i18n-aware `<Link>` component bakes a prefix that
- * doesn't match the route the middleware serves, and clicks from
- * the Bangla homepage (e.g. "ইট দেখুন") end up on the English
- * `/en/...` route instead of staying on `/...`.
+ * The site is Bangla-only. `localePrefix: "as-needed"` makes the
+ * single valid locale (`bn`) live at the unprefixed URL (e.g. `/`,
+ * `/contact`, `/products/bricks`), which matches the routes served
+ * by `[locale]/...` and what the middleware (`src/middleware.ts`)
+ * expects.
  */
 export const { Link, redirect, usePathname, useRouter } =
   createSharedPathnamesNavigation({

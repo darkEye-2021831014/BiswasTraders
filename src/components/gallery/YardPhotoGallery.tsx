@@ -71,7 +71,7 @@ function GalleryClient({
               <button
                 type="button"
                 onClick={() => setActiveIndex(idx)}
-                aria-label={caption || (locale === "bn" ? "ছবি বড় করুন" : "Enlarge photo")}
+                aria-label={caption || "ছবি বড় করুন"}
                 className="block w-full text-left border border-line bg-sand overflow-hidden hover:border-charcoal focus:outline-none focus-visible:border-charcoal focus-visible:shadow-stamp-sm transition-colors"
                 style={{ borderRadius: 2 }}
               >
@@ -176,9 +176,9 @@ const Lightbox = forwardRef<
     );
   }
   const caption = pick(photo.caption, locale);
-  const closeLabel = locale === "bn" ? "বন্ধ করুন" : "Close";
-  const nextLabel = locale === "bn" ? "পরের ছবি" : "Next photo";
-  const prevLabel = locale === "bn" ? "আগের ছবি" : "Previous photo";
+  const closeLabel = "বন্ধ করুন";
+  const nextLabel = "পরের ছবি";
+  const prevLabel = "আগের ছবি";
 
   return (
     <dialog

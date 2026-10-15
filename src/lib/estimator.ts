@@ -132,17 +132,17 @@ export function parseLocalizedNumber(raw: string): number {
 }
 
 /**
- * Format a number in the active language's digit script.
- *   "bn" → bn-BD  (Bengali digits)
- *   "en" → en-US  (Latin digits)
+ * Format a number in the Bangla digit script (bn-BD).
+ * The site is Bangla-only, so the `locale` argument is accepted for
+ * API stability but always treated as "bn".
  */
 export function formatLocalizedNumber(
   value: number,
-  locale: "bn" | "en",
+  _locale: "bn" = "bn",
   maximumFractionDigits = 2,
 ): string {
   if (!Number.isFinite(value)) return "0";
-  const intl = new Intl.NumberFormat(locale === "bn" ? "bn-BD" : "en-US", {
+  const intl = new Intl.NumberFormat("bn-BD", {
     maximumFractionDigits,
   });
   return intl.format(value);

@@ -19,10 +19,7 @@ export function LocalBusinessJsonLd({ locale }: { locale: Locale }) {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: site.legalName[locale] || site.legalName.bn,
-    description:
-      locale === "bn"
-        ? "ইট, বালু, খোয়া, সিমেন্ট ও রড সরবরাহকারী।"
-        : "Bricks, sand, khoa, cement and rebar supplier in Singair, Manikganj.",
+    description: "ইট, বালু, খোয়া, সিমেন্ট ও রড সরবরাহকারী। সিঙ্গাইর, মানিকগঞ্জ।",
     url: SITE_URL,
     telephone: `+${site.whatsapp}`,
     address: {

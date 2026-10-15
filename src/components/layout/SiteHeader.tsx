@@ -6,14 +6,17 @@ import { Badge } from "@/components/ui/Badge";
 import { site } from "@/content/site";
 import { telHref } from "@/lib/contact";
 import { PhoneIcon } from "@/components/ui/icons/PhoneIcon";
-import { LocaleSwitch } from "@/components/layout/LocaleSwitch";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { NavLinks } from "@/components/layout/NavLinks";
 import type { Locale } from "@/i18n/config";
 
+/**
+ * Site header. Bangla-only site, so there is no language switcher.
+ * The mobile menu still receives `locale` (always "bn" today) for
+ * type compatibility with the props it accepts.
+ */
 export async function SiteHeader({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale });
-  const otherLocale = locale === "bn" ? "en" : "bn";
   return (
     <header
       className="sticky top-0 z-30 bg-navy text-canvas border-b border-charcoal"
@@ -61,15 +64,6 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
         />
 
         <div className="flex items-center gap-2">
-          <LocaleSwitch
-            current={locale}
-            otherLocale={otherLocale}
-            ariaLabel={
-              otherLocale === "en"
-                ? t("header.switchToEnglish")
-                : t("header.switchToBangla")
-            }
-          />
           <a
             href={telHref()}
             className="hidden md:inline-flex items-center justify-center gap-2 h-10 px-3 text-xs font-display font-semibold uppercase tracking-label bg-brick text-white border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm touch"
@@ -88,17 +82,12 @@ export async function SiteHeader({ locale }: { locale: Locale }) {
           </Badge>
           <MobileMenu
             locale={locale}
-            otherLocale={otherLocale}
             labels={{
               openMenu: t("header.openMenu"),
               closeMenu: t("header.closeMenu"),
               menu: t("nav.menu"),
               callNow: t("actions.callNow"),
               whatsapp: t("actions.whatsapp"),
-              switchToEnglish: t("header.switchToEnglish"),
-              switchToBangla: t("header.switchToBangla"),
-              languageHeading:
-                locale === "bn" ? "ভাষা / Language" : "Language / ভাষা",
               nav: {
                 "/": t("nav.home"),
                 "/products/bricks": t("nav.bricks"),

@@ -20,7 +20,6 @@ type NavLabels = Record<(typeof NAV)[number]["href"], string>;
 
 type Props = {
   locale: Locale;
-  otherLocale: Locale;
   /** Strings pre-resolved on the server (see the comment below). */
   labels: {
     nav: NavLabels;
@@ -29,9 +28,6 @@ type Props = {
     menu: string;
     callNow: string;
     whatsapp: string;
-    switchToEnglish: string;
-    switchToBangla: string;
-    languageHeading: string;
   };
 };
 
@@ -53,7 +49,7 @@ type Props = {
  * from `@/i18n/navigation`, which we genuinely need to know which
  * link is active.
  */
-export function MobileMenu({ locale, otherLocale, labels }: Props) {
+export function MobileMenu({ labels }: Props) {
   const pathname = usePathname() || "/";
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
@@ -82,18 +78,10 @@ export function MobileMenu({ locale, otherLocale, labels }: Props) {
     return () => window.cancelAnimationFrame(id);
   }, [open]);
 
-  // Close on route change. With the locale switcher using a plain
-  // <a> (full page navigation) this still fires before the page
-  // swap, so the drawer doesn't appear "stuck open" on the new page.
+  // Close on route change.
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
-
-  // Locale switcher URL: deterministic plain anchor. The mobile menu
-  // closes itself on route change, so the full page navigation that
-  // the plain <a> triggers works correctly with the drawer state.
-  const cleanPath = pathname === "/" ? "" : pathname;
-  const switchTarget = otherLocale === "en" ? `/en${cleanPath}` : `/bn${cleanPath}`;
 
   // Close on Esc + simple focus trap.
   useEffect(() => {
@@ -230,24 +218,6 @@ export function MobileMenu({ locale, otherLocale, labels }: Props) {
                 );
               })}
             </ul>
-            <div className="px-3 py-2 mt-2 border-t border-canvas/10">
-              <div className="px-3 py-2 text-[10px] uppercase tracking-eyebrow text-canvas/60 font-display">
-                {labels.languageHeading}
-              </div>
-              <a
-                href={switchTarget}
-                className="min-h-12 px-3 flex items-center justify-between gap-2 font-display uppercase tracking-label text-sm text-canvas/85 hover:text-canvas hover:bg-white/5 border-l-2 border-transparent"
-                style={{ borderRadius: 2 }}
-                aria-label={
-                  otherLocale === "en"
-                    ? labels.switchToEnglish
-                    : labels.switchToBangla
-                }
-              >
-                <span>{otherLocale === "en" ? "EN — English" : "বাং — বাংলা"}</span>
-                <span aria-hidden className="text-canvas/50">⇌</span>
-              </a>
-            </div>
           </nav>
           <div className="p-3 border-t border-canvas/10 grid grid-cols-2 gap-2">
             <a

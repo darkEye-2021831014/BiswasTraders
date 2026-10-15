@@ -8,14 +8,11 @@ import { isLocale } from "@/i18n/config";
 import { buildMetadata } from "@/lib/seo";
 
 /**
- * Pre-render the 5 slugs for both locales at build time. Anything not
- * in this list is a 404 (handled in the page body).
+ * Pre-render the 5 product slugs at build time for the single locale.
+ * Anything not in this list is a 404 (handled in the page body).
  */
 export function generateStaticParams() {
-  return products.flatMap((p) => [
-    { locale: "bn", slug: p.slug },
-    { locale: "en", slug: p.slug },
-  ]);
+  return products.map((p) => ({ locale: "bn", slug: p.slug }));
 }
 
 /**
@@ -35,9 +32,7 @@ export async function generateMetadata({
   return buildMetadata({
     locale: params.locale,
     titleBn: t(`${product.slug}Title`),
-    titleEn: t(`${product.slug}Title`),
     descriptionBn: t(`${product.slug}Desc`),
-    descriptionEn: t(`${product.slug}Desc`),
     path: `/products/${product.slug}`,
     ogType: "article",
   });

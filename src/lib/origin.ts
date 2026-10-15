@@ -12,12 +12,15 @@ import { SITE_URL } from "@/content/site";
  * the client bundle. Anything that needs the request origin lives
  * here and is only ever imported by server components, layouts, and
  * route handlers.
+ *
+ * The site is Bangla-only. `localePath` is kept as a one-arg helper
+ * so it can still drop in wherever callers used to pass a locale —
+ * the locale argument is ignored on purpose.
  */
 
-/** Path prefix for each locale. "" for default (bn), "/en" for English. */
-export function localePath(locale: "bn" | "en", path: string): string {
-  const p = path.startsWith("/") ? path : `/${path}`;
-  return locale === "bn" ? p : `/en${p === "/" ? "" : p}`;
+/** Path prefix for the (only) locale. Always returns the path unchanged. */
+export function localePath(_locale: "bn", path: string): string {
+  return path.startsWith("/") ? path : `/${path}`;
 }
 
 /** Join an origin and a path, trimming any trailing slash on the origin. */
@@ -50,12 +53,11 @@ export function runtimeOrigin(): string {
 }
 
 /**
- * Absolute URL for a given locale + path, using the runtime origin.
+ * Absolute URL for a given path, using the runtime origin.
  *
  * Use this in server components that render per-request metadata
- * (canonical, hreflang, JSON-LD, breadcrumbs). This is the function
- * that "binds" the page to the host the visitor is actually on, which
- * matters when:
+ * (canonical, JSON-LD, breadcrumbs). This is the function that "binds"
+ * the page to the host the visitor is actually on, which matters when:
  *   - Crawling on `http://localhost:3000` (Lighthouse, dev, staging)
  *   - The production domain is behind a reverse proxy that rewrites host
  *
@@ -63,6 +65,6 @@ export function runtimeOrigin(): string {
  * (e.g. /og.jpg embedded in a Facebook post) keep using `${SITE_URL}/...`
  * directly.
  */
-export function absoluteUrl(locale: "bn" | "en", path: string): string {
+export function absoluteUrl(locale: "bn", path: string): string {
   return joinUrl(runtimeOrigin(), localePath(locale, path));
 }

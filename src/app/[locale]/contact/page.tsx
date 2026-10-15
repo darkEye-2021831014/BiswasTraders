@@ -29,11 +29,8 @@ export async function generateMetadata({
   return buildMetadata({
     locale: params.locale,
     titleBn: "যোগাযোগ — মেসার্স বিশ্বাস ট্রেডার্স",
-    titleEn: "Contact — M/S Biswas Traders",
     descriptionBn:
       "ফোন, WhatsApp, Facebook এবং ইয়ার্ডের ঠিকানা। সিঙ্গাইর, মানিকগঞ্জ।",
-    descriptionEn:
-      "Phone, WhatsApp, Facebook and the yard address. Singair, Manikganj.",
     path: "/contact",
   });
 }

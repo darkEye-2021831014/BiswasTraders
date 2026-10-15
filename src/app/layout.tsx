@@ -47,11 +47,11 @@ export const metadata: Metadata = {
   // " — M/S Biswas Traders" because every page already has the
   // brand in its <SiteHeader>, and the tab should be tight.
   title: {
-    default: "M/S Biswas Traders",
+    default: "মেসার্স বিশ্বাস ট্রেডার্স",
     template: "%s",
   },
   description:
-    "Bricks, sand, khoa, cement and rebar — delivered in our own trucks from Singair, Manikganj. Call or WhatsApp for today's rate.",
+    "সিঙ্গাইর, মানিকগঞ্জ থেকে ইট, বালু, খোয়া, সিমেন্ট ও রড — নিজস্ব ট্রাকে ডেলিভারি। আজকের দাম জানতে ফোন বা WhatsApp করুন।",
   // metadataBase lets every <link>/<meta> below resolve relative URLs
   // (icons, og:image, etc.) against the real site URL.
   metadataBase: new URL(SITE_URL),

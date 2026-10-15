@@ -20,7 +20,7 @@ const NoticeBar = dynamic(
 );
 
 export function generateStaticParams() {
-  return [{ locale: "bn" }, { locale: "en" }];
+  return [{ locale: "bn" }];
 }
 
 export default async function LocaleLayout({
