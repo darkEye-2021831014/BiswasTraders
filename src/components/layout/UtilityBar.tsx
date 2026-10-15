@@ -33,10 +33,11 @@ export async function UtilityBar({ locale }: { locale: Locale }) {
           <li>
             <a
               href={telHref()}
+              aria-label={t("actions.callNow")}
               className="inline-flex items-center gap-1.5 hover:text-canvas tabular"
             >
               <PhoneIcon className="w-3.5 h-3.5 text-orange" aria-hidden />
-              <span>{site.phone}</span>
+              <span aria-hidden>{site.phone}</span>
             </a>
           </li>
           <li>
@@ -44,12 +45,13 @@ export async function UtilityBar({ locale }: { locale: Locale }) {
               href={waMeHref()}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={t("actions.whatsapp")}
               className="inline-flex items-center gap-1.5 hover:text-canvas"
             >
               <span className="text-wa">
                 <WhatsAppIcon className="w-3.5 h-3.5" aria-hidden />
               </span>
-              <span>WhatsApp</span>
+              <span aria-hidden>WhatsApp</span>
             </a>
           </li>
         </ul>

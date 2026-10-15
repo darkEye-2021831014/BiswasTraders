@@ -2,7 +2,8 @@ import type { Locale } from "@/i18n/config";
 import { Link } from "@/i18n/navigation";
 import type { Product } from "@/content/products";
 import { pick } from "@/i18n/l10n";
-import { absoluteUrl, site } from "@/content/site";
+import { site } from "@/content/site";
+import { absoluteUrl } from "@/lib/origin";
 import { ArrowIcon } from "@/components/ui/icons/ArrowIcon";
 import { BreadcrumbListJsonLd } from "@/components/seo/JsonLd";
 
@@ -44,7 +45,7 @@ export function ProductBreadcrumb({
               {homeLabel}
             </Link>
           </li>
-          <li aria-hidden className="text-charcoal/40">/</li>
+          <li aria-hidden className="text-charcoal/55">/</li>
           <li>
             <Link
               href="/products"
@@ -53,7 +54,7 @@ export function ProductBreadcrumb({
               {productsLabel}
             </Link>
           </li>
-          <li aria-hidden className="text-charcoal/40">/</li>
+          <li aria-hidden className="text-charcoal/55">/</li>
           <li aria-current="page" className="text-charcoal font-semibold break-words">
             {productName}
           </li>

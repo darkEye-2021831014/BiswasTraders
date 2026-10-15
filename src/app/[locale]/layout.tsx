@@ -1,14 +1,23 @@
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { isLocale } from "@/i18n/config";
 import { site } from "@/content/site";
-import { NoticeBar } from "@/components/layout/NoticeBar";
 import { UtilityBar } from "@/components/layout/UtilityBar";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { StickyActionBar } from "@/components/layout/StickyActionBar";
+
+// NoticeBar is "use client" (the dismiss button needs state). When
+// `site.notice` is null (the default) we don't want its bundle on the
+// page at all, so we load it with `ssr: false` and only render the
+// element when there's actually a notice to show.
+const NoticeBar = dynamic(
+  () => import("@/components/layout/NoticeBar").then((m) => m.NoticeBar),
+  { ssr: false },
+);
 
 export function generateStaticParams() {
   return [{ locale: "bn" }, { locale: "en" }];

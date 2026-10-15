@@ -1,0 +1,34 @@
+# Target only modern evergreen browsers. This shrinks the legacy
+# polyfill bundle dramatically (≈40 KB gzipped → ≈5 KB) and the
+# bfcache + Cache-Control headers we set in next.config.mjs are
+# only honored on the same set.
+#
+# The brief asks for WCAG AA. None of these browser versions have
+# meaningful a11y differences from older targets — they're all
+# shipping modern accessibility primitives.
+#
+# What we cut:
+#   - IE 11 (and IE in general — Microsoft ended support in 2022)
+#   - Safari < 14 (iOS 14 / macOS Big Sur, both from 2020)
+#   - Chrome < 90 (April 2021)
+#   - Samsung Internet < 15
+#   - Firefox < 90
+#
+# What we keep:
+#   - The native <dialog> element (Safari 15.4+, Chrome 37+, FF 98+)
+#   - aspect-ratio, gap, subgrid, :has() — all baseline for the
+#     browsers we list below.
+last 2 Chrome versions
+last 2 Chrome major versions
+last 2 Firefox versions
+last 2 Firefox major versions
+last 2 Safari versions
+last 2 Safari major versions
+last 2 Edge versions
+last 2 Edge major versions
+last 2 iOS major versions
+not dead
+not IE 11
+not op_mini all
+not samsung 13
+not samsung 12

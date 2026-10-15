@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { telHref, waMeHref } from "@/lib/contact";
 import { PhoneIcon } from "@/components/ui/icons/PhoneIcon";
@@ -9,17 +8,31 @@ import { WhatsAppIcon } from "@/components/ui/icons/WhatsAppIcon";
 import type { Locale } from "@/i18n/config";
 
 const NAV = [
-  { href: "/", key: "nav.home" },
-  { href: "/products/bricks", key: "nav.bricks" },
-  { href: "/products", key: "nav.allMaterials" },
-  { href: "/delivery", key: "nav.delivery" },
-  { href: "/estimator", key: "nav.estimator" },
-  { href: "/contact", key: "nav.contact" },
+  { href: "/" },
+  { href: "/products/bricks" },
+  { href: "/products" },
+  { href: "/delivery" },
+  { href: "/estimator" },
+  { href: "/contact" },
 ] as const;
+
+type NavLabels = Record<(typeof NAV)[number]["href"], string>;
 
 type Props = {
   locale: Locale;
   otherLocale: Locale;
+  /** Strings pre-resolved on the server (see the comment below). */
+  labels: {
+    nav: NavLabels;
+    openMenu: string;
+    closeMenu: string;
+    menu: string;
+    callNow: string;
+    whatsapp: string;
+    switchToEnglish: string;
+    switchToBangla: string;
+    languageHeading: string;
+  };
 };
 
 /**
@@ -32,9 +45,15 @@ type Props = {
  *   - Body scroll is locked while open.
  *
  * Active link is derived from the current pathname via usePathname().
+ *
+ * `labels` is a flat bag of pre-resolved strings. Keeping them as
+ * props (rather than calling `useTranslations()` here) lets us drop
+ * the `intl-messageformat` runtime from the client bundle — the only
+ * next-intl code we ship is the tiny `Link` / `usePathname` shim
+ * from `@/i18n/navigation`, which we genuinely need to know which
+ * link is active.
  */
-export function MobileMenu({ locale, otherLocale }: Props) {
-  const t = useTranslations();
+export function MobileMenu({ locale, otherLocale, labels }: Props) {
   const pathname = usePathname() || "/";
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement | null>(null);
@@ -104,7 +123,7 @@ export function MobileMenu({ locale, otherLocale }: Props) {
         ref={toggleRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? t("header.closeMenu") : t("header.openMenu")}
+        aria-label={open ? labels.closeMenu : labels.openMenu}
         aria-expanded={open}
         aria-controls="mobile-menu"
         className="md:hidden inline-flex items-center justify-center w-10 h-10 text-canvas hover:bg-white/5 border border-canvas/20"
@@ -143,18 +162,18 @@ export function MobileMenu({ locale, otherLocale }: Props) {
           ref={drawerRef}
           role="dialog"
           aria-modal="true"
-          aria-label={t("nav.menu")}
+          aria-label={labels.menu}
           className="md:hidden fixed inset-0 z-50 bg-navy text-canvas flex flex-col"
         >
           <div className="flex items-center justify-between h-14 px-4 border-b border-canvas/10">
             <span className="font-display font-semibold uppercase tracking-label text-sm">
-              {t("nav.menu")}
+              {labels.menu}
             </span>
             <button
               type="button"
               onClick={() => setOpen(false)}
               data-drawer-close
-              aria-label={t("header.closeMenu")}
+              aria-label={labels.closeMenu}
               className="inline-flex items-center justify-center w-10 h-10 text-canvas hover:bg-white/5 border border-canvas/20"
               style={{ borderRadius: 2 }}
             >
@@ -173,7 +192,7 @@ export function MobileMenu({ locale, otherLocale }: Props) {
           </div>
           <nav
             className="flex-1 overflow-y-auto"
-            aria-label={t("nav.menu")}
+            aria-label={labels.menu}
           >
             <ul className="px-3 py-2">
               {NAV.map((item) => {
@@ -191,7 +210,7 @@ export function MobileMenu({ locale, otherLocale }: Props) {
                       }`}
                       style={{ borderRadius: 2 }}
                     >
-                      <span>{t(item.key)}</span>
+                      <span>{labels.nav[item.href]}</span>
                       {isActive ? (
                         <span
                           aria-hidden
@@ -205,7 +224,7 @@ export function MobileMenu({ locale, otherLocale }: Props) {
             </ul>
             <div className="px-3 py-2 mt-2 border-t border-canvas/10">
               <div className="px-3 py-2 text-[10px] uppercase tracking-eyebrow text-canvas/60 font-display">
-                {locale === "bn" ? "ভাষা / Language" : "Language / ভাষা"}
+                {labels.languageHeading}
               </div>
               <Link
                 href={pathname}
@@ -214,8 +233,8 @@ export function MobileMenu({ locale, otherLocale }: Props) {
                 style={{ borderRadius: 2 }}
                 aria-label={
                   otherLocale === "en"
-                    ? t("header.switchToEnglish")
-                    : t("header.switchToBangla")
+                    ? labels.switchToEnglish
+                    : labels.switchToBangla
                 }
               >
                 <span>{otherLocale === "en" ? "EN — English" : "বাং — বাংলা"}</span>
@@ -230,7 +249,7 @@ export function MobileMenu({ locale, otherLocale }: Props) {
               style={{ borderRadius: 2 }}
             >
               <PhoneIcon className="w-5 h-5" aria-hidden />
-              {t("sticky.call")}
+              {labels.callNow}
             </a>
             <a
               href={waMeHref()}
@@ -242,7 +261,7 @@ export function MobileMenu({ locale, otherLocale }: Props) {
               <span className="text-wa">
                 <WhatsAppIcon className="w-5 h-5" aria-hidden />
               </span>
-              {t("sticky.whatsapp")}
+              {labels.whatsapp}
             </a>
           </div>
         </div>

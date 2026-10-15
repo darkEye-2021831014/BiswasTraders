@@ -1,6 +1,5 @@
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
 import { CallButton } from "@/components/ui/CallButton";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
@@ -14,6 +13,13 @@ import { isLocale, defaultLocale, type Locale } from "@/i18n/config";
  *
  * The 404 inside the [locale] segment continues to be used for URLs that
  * match a locale prefix but no specific route (e.g. /en/no-such-page).
+ *
+ * We use a plain <a> for the home link — not a Link from
+ * `@/i18n/navigation` — because this file renders outside the
+ * [locale] segment, where `useParams()` returns no locale. Calling
+ * `useLocale()` in that context throws "No intl context found".
+ * The href is `/` so next-intl middleware rewrites it to the right
+ * locale URL on click; no Link wrapper is needed.
  */
 export default async function RootNotFound() {
   const h = await headers();
@@ -37,13 +43,14 @@ export default async function RootNotFound() {
           </h1>
           <p className="mt-3 max-w-prose text-canvas/80">{t("404.body")}</p>
           <div className="mt-6 flex flex-wrap gap-2">
-            <Link
+            <a
               href="/"
+              aria-label={t("nav.home")}
               className="h-12 px-4 inline-flex items-center font-display font-semibold uppercase tracking-label border border-canvas text-canvas hover:bg-canvas hover:text-navy"
               style={{ borderRadius: 2 }}
             >
               {t("404.home")}
-            </Link>
+            </a>
             <CallButton label={t("actions.callNow")} />
             <WhatsAppButton label={t("actions.whatsapp")} locale={locale} />
           </div>

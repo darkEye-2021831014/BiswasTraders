@@ -29,22 +29,25 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
       <div className="h-2 brick-course" aria-hidden />
       <Container className="py-10 md:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <section className="sm:col-span-2 md:col-span-1">
-          <Link href="/" className="flex items-center gap-3 mb-3">
+          <Link
+            href="/"
+            aria-label={t("nav.home")}
+            className="flex items-center gap-3 mb-3"
+          >
             <span
               aria-hidden
-              className="w-10 h-10 relative overflow-hidden shrink-0"
-              style={{ borderRadius: 2 }}
+              className="w-10 h-10 relative shrink-0 rounded-full bg-canvas overflow-hidden"
             >
               <Image
-                src="/brand/logo.png"
+                src="/brand/logo.jpeg"
                 alt=""
-                width={40}
-                height={40}
+                width={2000}
+                height={2000}
                 sizes="40px"
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
             </span>
-            <span className="font-display font-semibold uppercase tracking-label text-sm">
+            <span className="font-display font-semibold uppercase tracking-label text-sm" aria-hidden>
               {site.legalName[locale]}
             </span>
           </Link>
@@ -127,10 +130,11 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
             <li>
               <a
                 href={telHref()}
+                aria-label={t("actions.callNow")}
                 className="inline-flex items-center gap-2 hover:underline tabular"
               >
                 <PhoneIcon className="w-4 h-4 text-orange" aria-hidden />
-                <span>{site.phone}</span>
+                <span aria-hidden>{site.phone}</span>
               </a>
             </li>
             <li>
@@ -138,12 +142,13 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
                 href={waMeHref()}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={t("actions.whatsapp")}
                 className="inline-flex items-center gap-2 hover:underline"
               >
-                <span className="text-wa">
-                  <WhatsAppIcon className="w-4 h-4" aria-hidden />
+                <span className="text-wa" aria-hidden>
+                  <WhatsAppIcon className="w-4 h-4" />
                 </span>
-                <span>WhatsApp · +{site.whatsapp}</span>
+                <span aria-hidden>WhatsApp · +{site.whatsapp}</span>
               </a>
             </li>
             {site.facebookUrl ? (

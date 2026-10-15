@@ -26,11 +26,11 @@ export function ProductRelated({
   if (others.length === 0) return null;
   return (
     <section className="mt-12" aria-labelledby="related-title">
-      <div className="dim-rule dim-rule--start mb-4">
+      <h2
+        id="related-title"
+        className="dim-rule dim-rule--start mb-4 text-charcoal font-display uppercase tracking-eyebrow text-xs"
+      >
         <span className="whitespace-nowrap">{title}</span>
-      </div>
-      <h2 id="related-title" className="sr-only">
-        {title}
       </h2>
       <ul className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {others.map((p) => (

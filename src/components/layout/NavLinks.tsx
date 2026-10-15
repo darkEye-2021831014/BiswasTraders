@@ -1,25 +1,33 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 
 const NAV = [
-  { href: "/products/bricks", key: "nav.bricks" },
-  { href: "/products", key: "nav.allMaterials" },
-  { href: "/delivery", key: "nav.delivery" },
-  { href: "/estimator", key: "nav.estimator" },
-  { href: "/contact", key: "nav.contact" },
+  { href: "/products/bricks" },
+  { href: "/products" },
+  { href: "/delivery" },
+  { href: "/estimator" },
+  { href: "/contact" },
 ] as const;
 
+type Labels = Record<(typeof NAV)[number]["href"], string> & {
+  /** aria-label for the <nav> element itself. */
+  menu: string;
+};
+
 /**
- * Desktop primary nav (md+). The active link is derived from usePathname so
- * it stays in sync with client-side route changes.
+ * Desktop primary nav (md+). The active link is derived from `usePathname`
+ * so it stays in sync with client-side route changes.
+ *
+ * Labels are passed in as props from the parent server component. This
+ * keeps the `intl-messageformat` runtime out of the client bundle — only
+ * `next-intl/navigation`'s tiny `usePathname` is loaded, which we
+ * genuinely need to highlight the active route on every navigation.
  */
-export function NavLinks() {
-  const t = useTranslations();
+export function NavLinks({ labels }: { labels: Labels }) {
   const pathname = usePathname() || "/";
   return (
-    <nav className="hidden md:flex items-center gap-1" aria-label={t("nav.menu")}>
+    <nav className="hidden md:flex items-center gap-1" aria-label={labels.menu}>
       {NAV.map((item) => {
         const isActive =
           pathname === item.href || pathname.startsWith(item.href + "/");
@@ -35,7 +43,7 @@ export function NavLinks() {
             }`}
             style={{ borderRadius: 2 }}
           >
-            {t(item.key)}
+            {labels[item.href]}
           </Link>
         );
       })}

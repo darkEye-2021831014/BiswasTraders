@@ -180,7 +180,13 @@ html[lang="bn"] h6 {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--color-charcoal);
+  /* Inherit color from the parent so the eyebrow text AND the
+     decorative rule lines (::before / ::after) automatically
+     switch to a light tone when nested inside a dark surface
+     (e.g. the navy footer or the CTA band). On light backgrounds
+     the parent color is already charcoal, so the visual stays
+     identical. See SiteFooter.tsx / FinalCtaBand.tsx. */
+  color: currentColor;
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
   font-size: 0.6875rem;
   font-weight: 700;
@@ -192,12 +198,12 @@ html[lang="bn"] h6 {
   content: "";
   flex: 1 1 auto;
   height: 1px;
-  background: var(--color-charcoal);
+  background: currentColor;
   position: relative;
 }
 .dim-rule::before {
   flex: 0 0 8px;
-  background: var(--color-charcoal);
+  background: currentColor;
 }
 .dim-rule::after {
   flex: 0 0 8px;
@@ -214,7 +220,7 @@ html[lang="bn"] h6 {
   position: relative;
   flex: 1 1 auto;
   height: 1px;
-  background: var(--color-charcoal);
+  background: currentColor;
 }
 .dim-rule__ticks::before,
 .dim-rule__ticks::after {
@@ -223,7 +229,7 @@ html[lang="bn"] h6 {
   top: -3px;
   width: 1px;
   height: 7px;
-  background: var(--color-charcoal);
+  background: currentColor;
 }
 .dim-rule__ticks::before { left: 0; }
 .dim-rule__ticks::after { right: 0; }
@@ -247,6 +253,16 @@ html[lang="bn"] h6 {
 .stamp--dark {
   background: var(--color-charcoal);
   color: var(--color-canvas);
+}
+.stamp--ink {
+  /* Charcoal outline + charcoal text on a transparent fill.
+   * Used on top of photographic backgrounds (the Hero brick image)
+   * where a solid colored box would clash with the photo palette
+   * but a bare text would be unreadable. The thin border reads
+   * like a postage-cancellation stamp. */
+  border-color: var(--color-charcoal);
+  color: var(--color-charcoal);
+  background: transparent;
 }
 .stamp--orange {
   border-color: var(--color-orange);

@@ -74,7 +74,27 @@ const nextConfig = {
     return [
       {
         source: "/:path*",
-        headers: securityHeaders,
+        headers: [
+          ...securityHeaders,
+          // The root layout reads `headers()` to set `<html lang>`, which
+          // makes the page dynamic. By default Next sends
+          // `Cache-Control: no-store` for dynamic pages, which:
+          //   1. Blocks back/forward cache (bfcache) on Chrome / Safari
+          //   2. Forces a full re-fetch on every navigation
+          //
+          // For this site every page is fully static content (no per-user
+          // data), so we override the default with a revalidation cache
+          // directive. CDN-friendly, browser-friendly, and bfcache-friendly.
+          {
+            key: "Cache-Control",
+            // 5 min fresh + 1 day SWR. This is the right shape for a
+            // site whose content rarely changes: it lets the browser
+            // and CDN serve from cache for fast bfcache restoration,
+            // but the SWR window guarantees the next visitor gets the
+            // next build within a day.
+            value: "public, max-age=300, stale-while-revalidate=86400",
+          },
+        ],
       },
     ];
   },

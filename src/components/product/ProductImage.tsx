@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import type { L10n } from "@/i18n/l10n";
 
 type Palette = "brick" | "sand" | "charcoal" | "navy" | "orange";
@@ -15,23 +19,57 @@ type Props = {
 };
 
 /**
- * Renders the product photo from /public/images/products/<slug>.jpg. If the
- * photo is missing (which it will be until the owner uploads real photos),
- * we fall back to a brutalist SVG placeholder themed to the product.
+ * Renders the product photo from /public/images/products/<slug>.jpg.
+ *
+ * Behaviour:
+ *  - If the JPG exists at /images/products/<slug>.jpg, we render it
+ *    via next/image with object-cover so it fills the chosen aspect.
+ *  - If the request 404s (the owner hasn't uploaded a photo yet, or
+ *    uploaded it under the wrong name), we fall back to the brutalist
+ *    SVG placeholder themed to the product, so the layout never collapses.
+ *
+ * The fallback is handled client-side via `onError` because `next/image`
+ * resolves its own loader and the server can't synchronously probe the
+ * public/ folder. We attempt the JPG by default; the user sees the
+ * placeholder only if the file is genuinely absent.
+ *
+ * This component used to be a pure server component (no "use client").
+ * Adding the directive is necessary only to listen to onError. The
+ * 9 call sites pass through unchanged.
  */
-export function ProductImage({ slug, alt, variant, aspect = "4/3", className, priority = false }: Props) {
+export function ProductImage({
+  slug,
+  alt,
+  variant,
+  aspect = "4/3",
+  className,
+  priority = false,
+}: Props) {
   const palette = palettes[variant];
   const aspectClass = aspectClassMap[aspect];
+  const [showFallback, setShowFallback] = useState(false);
+  const src = `/images/products/${slug}.jpg`;
   return (
     <div
       className={`relative overflow-hidden border border-line bg-sand ${aspectClass} ${className ?? ""}`}
     >
-      <PlaceholderImage slug={slug} alt={alt} palette={palette} />
-      <div className="absolute inset-0 ring-1 ring-inset ring-charcoal/5 pointer-events-none" aria-hidden />
-      {/* sr-only alt text for accessibility on placeholder */}
-      <span className="sr-only">{alt.bn} / {alt.en}</span>
-      {/* Mark whether this is a placeholder, useful for `priority` if next/image is later added */}
-      {priority ? <span className="sr-only">Above the fold</span> : null}
+      {showFallback ? (
+        <PlaceholderImage slug={slug} alt={alt} palette={palette} />
+      ) : (
+        <Image
+          src={src}
+          alt={`${alt.bn} / ${alt.en}`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
+          priority={priority}
+          className="object-cover"
+          onError={() => setShowFallback(true)}
+        />
+      )}
+      <div
+        className="absolute inset-0 ring-1 ring-inset ring-charcoal/5 pointer-events-none"
+        aria-hidden
+      />
     </div>
   );
 }
@@ -42,7 +80,10 @@ const aspectClassMap: Record<NonNullable<Props["aspect"]>, string> = {
   "16/9": "aspect-video",
 };
 
-const palettes: Record<Palette, { bg: string; fg: string; accent: string; label: string; motif: Motif }> = {
+const palettes: Record<
+  Palette,
+  { bg: string; fg: string; accent: string; label: string; motif: Motif }
+> = {
   brick: {
     bg: "#A13828",
     fg: "#FAF8F5",
@@ -104,16 +145,34 @@ function PlaceholderImage({
     >
       <rect width="400" height="300" fill={bg} />
       <Motif motif={motif} accent={accent} fg={fg} />
-      <g fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" fontWeight={700} letterSpacing="0.12em">
-        <text x="20" y="36" fontSize="14" fill={fg} opacity="0.7">PLACEHOLDER</text>
-        <text x="20" y="280" fontSize="22" fill={fg}>{label}</text>
-        <text x="20" y="296" fontSize="10" fill={fg} opacity="0.6">{slug}.jpg</text>
+      <g
+        fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
+        fontWeight={700}
+        letterSpacing="0.12em"
+      >
+        <text x="20" y="36" fontSize="14" fill={fg} opacity="0.7">
+          PLACEHOLDER
+        </text>
+        <text x="20" y="280" fontSize="22" fill={fg}>
+          {label}
+        </text>
+        <text x="20" y="296" fontSize="10" fill={fg} opacity="0.6">
+          {slug}.jpg
+        </text>
       </g>
     </svg>
   );
 }
 
-function Motif({ motif, accent, fg }: { motif: Motif; accent: string; fg: string }) {
+function Motif({
+  motif,
+  accent,
+  fg,
+}: {
+  motif: Motif;
+  accent: string;
+  fg: string;
+}) {
   if (motif === "brick") {
     return (
       <g>
@@ -147,7 +206,16 @@ function Motif({ motif, accent, fg }: { motif: Motif; accent: string; fg: string
         {Array.from({ length: 220 }).map((_, i) => {
           const x = (i * 37) % 400;
           const y = (i * 53) % 300;
-          return <circle key={i} cx={x} cy={y} r={(i % 4) + 1} fill={accent} fillOpacity={0.3 + (i % 5) * 0.1} />;
+          return (
+            <circle
+              key={i}
+              cx={x}
+              cy={y}
+              r={(i % 4) + 1}
+              fill={accent}
+              fillOpacity={0.3 + (i % 5) * 0.1}
+            />
+          );
         })}
       </g>
     );
@@ -194,7 +262,13 @@ function Motif({ motif, accent, fg }: { motif: Motif; accent: string; fg: string
         <line key={`h${i}`} x1={20} y1={50 + i * 28} x2={380} y2={50 + i * 28} />
       ))}
       {Array.from({ length: 12 }).map((_, i) => (
-        <line key={`v${i}`} x1={50 + i * 28} y1={30} x2={50 + i * 28} y2={270} />
+        <line
+          key={`v${i}`}
+          x1={50 + i * 28}
+          y1={30}
+          x2={50 + i * 28}
+          y2={270}
+        />
       ))}
     </g>
   );

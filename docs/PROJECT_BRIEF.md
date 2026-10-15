@@ -4,8 +4,8 @@
 
 - **Name (BN):** মেসার্স বিশ্বাস ট্রেডার্স
 - **Name (EN):** M/S Biswas Traders
-- **Address (BN):** জয়মন্টপ খেলার মাঠ, সিঙ্গাইর, মানিকগঞ্জ ১২৮২
-- **Address (EN):** Joymantop Khelar Math, Singair, Manikganj 1822, Bangladesh
+- **Address (BN):** জয়মন্টপ, সিঙ্গাইর, মানিকগঞ্জ
+- **Address (EN):** Joymontop, Singair, Manikganj, Bangladesh
 - **Trade:** Bricks (ইট), sand (বালু), khoa / stone chips (খোয়া / পাথর), cement (সিমেন্ট) and rod / rebar (রড).
 - **Phone:** 01729997977
 - **WhatsApp:** https://wa.me/8801729997977

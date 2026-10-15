@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, SITE_URL } from "@/content/site";
+import { absoluteUrl } from "@/lib/origin";
 import { products } from "@/content/products";
 
 /**

@@ -7,7 +7,9 @@ import type { L10n } from "@/i18n/l10n";
  */
 
 /**
- * Canonical site URL used for SEO (canonical, hreflang, sitemap, JSON-LD).
+ * Canonical site URL used for absolute URLs that need to keep working
+ * outside the request context (e.g. /og.jpg referenced by Facebook, the
+ * link in robots.txt, JSON-LD fields like `url` that we want fixed).
  *
  * Defaults to a placeholder domain. The owner can override this in two
  * ways, in order of preference:
@@ -20,19 +22,7 @@ import type { L10n } from "@/i18n/l10n";
  * TODO(owner): replace the fallback with the real production domain.
  */
 export const SITE_URL: string =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://biswastraders.trade";
-
-/** Path prefix for each locale. "" for default (bn), "/en" for English. */
-export function localePath(locale: "bn" | "en", path: string): string {
-  const p = path.startsWith("/") ? path : `/${path}`;
-  return locale === "bn" ? p : `/en${p === "/" ? "" : p}`;
-}
-
-/** Absolute URL for a given locale + path. */
-export function absoluteUrl(locale: "bn" | "en", path: string): string {
-  return `${SITE_URL}${localePath(locale, path)}`;
-}
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://biswastraders.trade";
 
 export type ZoneGroup = "core" | "extended";
 
@@ -64,7 +54,10 @@ export type Landmark = L10n;
 
 export type Hours = {
   /** Standard weekday hours (e.g. "7 AM – 9 PM"). */
-  general: L10n;
+  general: {
+    en: "8:00 AM – 8:00 PM";
+    bn: "সকাল ৮টা – রাত ৮টা";
+  };
   /** Friday-specific row, if hours differ on Friday. null = same as general. */
   friday: L10n | null;
 };
@@ -77,22 +70,24 @@ export const site = {
     en: "M/S Biswas Traders",
   } as L10n,
   address: {
-    bn: "জয়মন্টপ খেলার মাঠ, সিঙ্গাইর, মানিকগঞ্জ ১৮২২",
-    en: "Joymantop Khelar Math, Singair, Manikganj 1822, Bangladesh",
+    bn: "জয়মন্টপ, সিঙ্গাইর, মানিকগঞ্জ",
+    en: "Joymontop, Singair, Manikganj, Bangladesh",
   } as L10n,
   phone: "01729997977", // BD number; tel: link uses +880 prefix
   whatsapp: "8801729997977", // E.164 without '+' for wa.me
   facebookUrl: "https://facebook.com/biswastraders.trade",
-  // TODO(owner): if a Google Maps share URL exists, paste it here; otherwise leave null.
-  googleMapsUrl: null as string | null,
+  /** Google Maps *share* link used by the "Open in Google Maps" button
+   *  on the contact page. */
+  googleMapsUrl: "https://maps.app.goo.gl/e2r2Ng4yJs52QVAa7",
   /**
    * Google Maps *embed* URL (the `https://www.google.com/maps/embed?pb=...`
-   * variant, not a share link). The contact page only renders the
-   * click-to-load map iframe when this is set, so we never request a
-   * third-party embed on page load.
+   * variant, not a share link). The contact page renders this as a
+   * lazy-loaded iframe when set; the iframe is gated by the CSP
+   * (frame-src https://www.google.com in next.config.mjs) and by
+   * the browser's native iframe lazy-loading.
    */
-  // TODO(owner): if you want the map iframe, paste the embed URL here.
-  googleMapsEmbedUrl: null as string | null,
+  googleMapsEmbedUrl:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d922.1350500530433!2d90.1825469857006!3d23.804797384497682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755ed8ce58d3ff7%3A0xfbc426b5d780097d!2sBiswas%20Traders!5e0!3m2!1sen!2sbd!4v1792039636373!5m2!1sen!2sbd",
   // TODO(owner): business hours. Until confirmed, set to null and the UI hides it.
   hours: null as Hours | null,
   // TODO(owner): optional notice banner (e.g. "Office closed Friday afternoon").
@@ -103,7 +98,7 @@ export const site = {
    * `googleMapsUrl` is not set. Add more as you confirm them.
    */
   landmarks: [
-    { bn: "জয়মন্টপ খেলার মাঠ", en: "Joymantop Khelar Math" } as Landmark,
+    { bn: "জয়মন্টপ", en: "Joymontop" } as Landmark,
     // TODO(owner): add additional nearby landmarks you usually tell people
     // (mosque, school, bazaar, highway junction, etc.).
   ] as Landmark[],
@@ -136,8 +131,8 @@ export const site = {
       group: "extended",
     },
     {
-      id: "west-dhaka",
-      name: { bn: "পশ্চিম ঢাকা", en: "West Dhaka" } as L10n,
+      id: "dhaka",
+      name: { bn: "ঢাকা", en: "Dhaka" } as L10n,
       // TODO(owner): confirm.
       distanceKm: null,
       group: "extended",

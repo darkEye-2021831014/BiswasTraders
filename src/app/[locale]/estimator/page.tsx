@@ -88,6 +88,7 @@ export default async function EstimatorPage({
               validateTooBig: t("estimator.validateTooBig"),
               validateNan: t("estimator.validateNan"),
               estimateNote: t("estimator.estimateNote"),
+              calc: t("estimator.calc"),
               askForPrice: t("estimator.askForPrice"),
               askForPriceQuantity: t("estimator.askForPriceQuantity"),
               callNow: t("actions.callNow"),

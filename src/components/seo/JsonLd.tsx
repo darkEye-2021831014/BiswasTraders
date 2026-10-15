@@ -30,7 +30,7 @@ export function LocalBusinessJsonLd({ locale }: { locale: Locale }) {
       streetAddress: address,
       addressLocality: "Singair",
       addressRegion: "Manikganj",
-      postalCode: "1822",
+      postalCode: undefined,
       addressCountry: "BD",
     },
     areaServed: site.serviceZones

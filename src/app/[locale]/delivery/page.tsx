@@ -275,7 +275,7 @@ export default async function DeliveryPage({
                       {pick(v.capacity, locale)}
                     </div>
                   ) : (
-                    <div className="text-[11px] text-charcoal/40 italic mt-auto pt-3 border-t border-line">
+                    <div className="text-[11px] text-charcoal/60 italic mt-auto pt-3 border-t border-line">
                       {/* TODO(owner) */}
                     </div>
                   )}
@@ -446,7 +446,7 @@ function ZoneGroup({
                   ~ {z.distanceKm} km
                 </div>
               ) : (
-                <div className="text-[11px] text-charcoal/40 italic mt-1">
+                <div className="text-[11px] text-charcoal/60 italic mt-1">
                   {/* TODO(owner) */}
                 </div>
               )}

@@ -376,7 +376,8 @@
   },
   "sticky": {
     "call": "কল",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "regionLabel": "দ্রুত যোগাযোগ"
   },
   "whatsapp": {
     "greeting": "আসসালামু আলাইকুম",

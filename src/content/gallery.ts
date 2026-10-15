@@ -36,13 +36,20 @@ export type GalleryPhoto = {
 };
 
 export const gallery: GalleryPhoto[] = [
-  // Example entry (uncomment + drop a file to test):
-  // {
-  //   src: "/images/yard/yard-front.jpg",
-  //   caption: {
-  //     bn: "ডিপোর সামনের দৃশ্য",
-  //     en: "Front of the depot",
-  //   } as L10n,
-  //   orientation: "landscape",
-  // },
+  {
+    src: "/images/yard/mainYard.jpg",
+    caption: {
+      bn: "ডিপোর মূল এলাকা",
+      en: "Main yard area",
+    } as L10n,
+    orientation: "landscape",
+  },
+  {
+    src: "/images/yard/yard.jpg",
+    caption: {
+      bn: "ইয়ার্ডের আরেকটি দৃশ্য",
+      en: "Another view of the yard",
+    } as L10n,
+    orientation: "landscape",
+  },
 ];

@@ -1,4 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
+import dynamic from "next/dynamic";
 import { Hero } from "@/components/home/Hero";
 import { TrustStrip } from "@/components/home/TrustStrip";
 import { BrickSpotlight } from "@/components/home/BrickSpotlight";
@@ -10,7 +11,6 @@ import { DepotTeaser } from "@/components/home/DepotTeaser";
 import { FinalCtaBand } from "@/components/home/FinalCtaBand";
 import { BrickDivider } from "@/components/ui/BrickDivider";
 import { HomeFaqTeaser } from "@/components/home/HomeFaqTeaser";
-import { YardPhotoGallery } from "@/components/gallery/YardPhotoGallery";
 import { LocalBusinessJsonLd } from "@/components/seo/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -18,6 +18,19 @@ import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/config";
 import { buildMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
+import { gallery } from "@/content/gallery";
+
+// YardPhotoGallery is "use client" (the lightbox needs JS). When the
+// gallery is empty (the default state) we don't want its bundle to
+// count against the home-page JS budget at all, so we load it with
+// `ssr: false` and only when there's something to render.
+const YardPhotoGallery = dynamic(
+  () =>
+    import("@/components/gallery/YardPhotoGallery").then(
+      (m) => m.YardPhotoGallery,
+    ),
+  { ssr: false },
+);
 
 /**
  * Home-page metadata. Title + description live in the message files
@@ -70,18 +83,20 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
 
       <HomeFaqTeaser locale={locale} />
 
-      <section className="py-12 md:py-16 bg-canvas border-b border-line">
-        <Container>
-          <SectionHeading
-            eyebrow={t("homeGallery.eyebrow")}
-            title={t("homeGallery.title")}
-            subtitle={t("homeGallery.subtitle")}
-          />
-          <div className="mt-6">
-            <YardPhotoGallery locale={locale} />
-          </div>
-        </Container>
-      </section>
+      {gallery.length > 0 ? (
+        <section className="py-12 md:py-16 bg-canvas border-b border-line">
+          <Container>
+            <SectionHeading
+              eyebrow={t("homeGallery.eyebrow")}
+              title={t("homeGallery.title")}
+              subtitle={t("homeGallery.subtitle")}
+            />
+            <div className="mt-6">
+              <YardPhotoGallery locale={locale} />
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       <FinalCtaBand locale={locale} />
     </>

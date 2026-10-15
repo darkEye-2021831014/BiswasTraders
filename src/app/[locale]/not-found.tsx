@@ -25,6 +25,7 @@ export default async function NotFound({ params }: { params?: { locale?: string 
           <div className="mt-6 flex flex-wrap gap-2">
             <Link
               href="/"
+              aria-label={t("nav.home")}
               className="h-12 px-4 inline-flex items-center font-display font-semibold uppercase tracking-label border border-canvas text-canvas hover:bg-canvas hover:text-navy"
               style={{ borderRadius: 2 }}
             >

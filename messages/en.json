@@ -44,7 +44,7 @@
     "heroTitle": "Dependable construction-material supplier",
     "heroSubtitle": "Bricks, sand, khoa, cement and rebar — five products, one address.",
     "heroSeeBricks": "See bricks",
-    "heroStampLocation": "Joymantop, Singair",
+    "heroStampLocation": "Joymontop, Singair",
     "trustEyebrow": "Why people come back",
     "trustTitle": "Four ordinary promises",
     "trustSubtitle": "Nothing grand — just what we keep on every job.",
@@ -376,7 +376,8 @@
   },
   "sticky": {
     "call": "Call",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "regionLabel": "Quick contact"
   },
   "whatsapp": {
     "greeting": "Assalamu Alaikum",

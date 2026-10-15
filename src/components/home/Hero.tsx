@@ -17,7 +17,7 @@ import type { Locale } from "@/i18n/config";
  *
  * The right-hand side (or below on mobile) is a framed ProductImage of
  * bricks with a stamp badge that shows only the confirmed location
- * (Joymantop, Singair) — no other unconfirmed claims.
+ * (Joymontop, Singair) — no other unconfirmed claims.
  */
 export async function Hero({ locale }: { locale: Locale }) {
   const t = await getTranslations({ locale });
@@ -58,10 +58,10 @@ export async function Hero({ locale }: { locale: Locale }) {
           <div>
             <div className="relative border border-canvas/20 bg-canvas/[0.04] p-3 md:p-4 shadow-stamp" style={{ borderRadius: 2 }}>
               <div className="absolute top-3 left-3 z-10">
-                <Badge tone="orange">
+                <Badge tone="ink">
                   <span
                     aria-hidden
-                    className="w-1.5 h-1.5 bg-navy rounded-full"
+                    className="w-1.5 h-1.5 bg-orange rounded-full"
                   />
                   {t("home.heroStampLocation")}
                 </Badge>
@@ -78,7 +78,7 @@ export async function Hero({ locale }: { locale: Locale }) {
                 <span className="tabular">{site.phone}</span>
               </div>
             </div>
-            <p className="mt-3 text-[11px] uppercase tracking-eyebrow font-display text-canvas/55 text-center">
+            <p className="mt-3 text-[11px] uppercase tracking-eyebrow font-display text-canvas/70 text-center">
               {t("actions.callNow")} · {t("actions.whatsapp")}
             </p>
           </div>

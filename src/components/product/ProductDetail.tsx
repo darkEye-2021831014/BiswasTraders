@@ -74,9 +74,6 @@ export async function ProductDetail({
             aspect="4/3"
             priority
           />
-          <p className="mt-3 text-xs text-charcoal/70 italic">
-            {`Placeholder — drop a real photo at /public/images/products/${product.slug}.jpg`}
-          </p>
         </div>
         <div className="space-y-5">
           <div className="flex flex-wrap items-center gap-2">

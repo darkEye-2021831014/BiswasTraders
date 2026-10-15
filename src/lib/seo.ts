@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { SITE_URL, localePath, absoluteUrl } from "@/content/site";
+import { SITE_URL } from "@/content/site";
+import { absoluteUrl } from "@/lib/origin";
 import type { Locale } from "@/i18n/config";
 import { isLocale } from "@/i18n/config";
 
@@ -45,6 +46,10 @@ export function buildMetadata(opts: {
   const index = opts.index !== false;
   const title = locale === "bn" ? opts.titleBn : opts.titleEn;
   const description = locale === "bn" ? opts.descriptionBn : opts.descriptionEn;
+  // Canonical + hreflang bind to the request's host via runtimeOrigin()
+  // so the same build works on localhost, staging, and production. The
+  // og:image URL stays on SITE_URL because that asset is fetched by
+  // crawlers / social cards long after the original request is gone.
   const canonical = absoluteUrl(locale, opts.path);
 
   const languages: Record<string, string> = {
@@ -72,6 +77,9 @@ export function buildMetadata(opts: {
       locale: locale === "bn" ? "bn_BD" : "en_US",
       images: [
         {
+          // /og.jpg is a build-time absolute URL — we want Facebook,
+          // Twitter etc. to keep fetching it from the production domain
+          // even when the page being shared was viewed on a different host.
           url: `${SITE_URL}${OG_PATH}`,
           width: 1200,
           height: 630,

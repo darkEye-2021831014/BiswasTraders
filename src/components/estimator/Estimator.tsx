@@ -81,6 +81,7 @@ type Labels = {
   validateTooBig: string;
   validateNan: string;
   estimateNote: string;
+  calc: string;
   askForPrice: string;
   askForPriceQuantity: string;
   callNow: string;
@@ -212,7 +213,7 @@ function NumberInput({
       >
         <span>{label}</span>
         {hint ? (
-          <span className="text-[10px] text-charcoal/50 normal-case tracking-normal font-sans">
+          <span className="text-[10px] text-charcoal/70 normal-case tracking-normal font-sans">
             {hint}
           </span>
         ) : null}
@@ -420,7 +421,7 @@ function BricksTab({
         className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/70 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
         style={{ borderRadius: 2 }}
       >
-        {labels.estimateNote ? labels.tabBricks : labels.tabBricks}
+        {labels.calc}
       </button>
 
       {result ? (
@@ -703,7 +704,7 @@ function ConcreteTab({
         className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/70 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
         style={{ borderRadius: 2 }}
       >
-        {labels.tabConcrete}
+        {labels.calc}
       </button>
 
       {result ? (
@@ -922,7 +923,7 @@ function CftTab({
         className="h-12 px-5 bg-brick text-white font-display font-semibold uppercase tracking-label border border-brick hover:bg-brick-hover hover:shadow-stamp-brick-sm transition-transform duration-100 active:translate-x-[1px] active:translate-y-[1px] disabled:bg-mortar disabled:border-mortar disabled:text-charcoal/70 disabled:cursor-not-allowed disabled:hover:bg-mortar disabled:hover:shadow-none"
         style={{ borderRadius: 2 }}
       >
-        {labels.tabCft}
+        {labels.calc}
       </button>
 
       {result ? <CftResult locale={locale} labels={labels} result={result} /> : null}
